@@ -1,0 +1,591 @@
+<!-- image-to-pdf.html - Convert Images to PDF Online Free -->
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Free Image to PDF Converter - Convert JPG, PNG to PDF Online</title>
+    <meta name="description" content="Convert multiple images to PDF online for free. Combine JPG, PNG, WebP into a single PDF. Unlimited usage, no registration, 100% private client-side conversion.">
+    <meta name="keywords" content="image to PDF, JPG to PDF, PNG to PDF, convert images to PDF, combine images to PDF, free image to PDF converter, online PDF creator, unlimited PDF converter">
+    <link rel="canonical" href="https://pdfimagera.com/image-to-pdf">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="Free Image to PDF Converter - Convert JPG, PNG to PDF">
+    <meta property="og:description" content="Combine multiple images into a single PDF. Free, unlimited, and 100% private. No uploads, no registration required.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://pdfimagera.com/image-to-pdf">
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Free Image to PDF Converter - PDFImagera">
+    <meta name="twitter:description" content="Convert images to PDF online for free. Unlimited usage, complete privacy.">
+    
+    <!-- Additional SEO -->
+    <meta name="robots" content="index, follow">
+    <meta name="googlebot" content="index, follow">
+    <meta name="author" content="PDFImagera">
+    <meta name="language" content="English">
+    <meta name="revisit-after" content="1 days">
+
+    <!-- Schema Markup -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Image to PDF Converter",
+        "description": "Convert multiple images to PDF online for free.",
+        "applicationCategory": "Utility",
+        "operatingSystem": "All",
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+    }
+    </script>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: { 50: '#f0fdf4', 100: '#dcfce7', 500: '#22c55e', 600: '#16a34a', 700: '#15803d' }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .gradient-bg { background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 50%, #f0fdf4 100%); }
+        .tool-container { max-width: 950px; margin: 0 auto; }
+        .drop-zone { border: 2px dashed #cbd5e1; transition: all 0.3s; min-height: 200px; }
+        .drop-zone:hover, .drop-zone.drag-over { border-color: #22c55e; background: #f0fdf4; }
+        .badge-free { background: #dcfce7; color: #15803d; font-size: 10px; font-weight: 700; padding: 2px 12px; border-radius: 20px; }
+        .badge-unlimited { background: #fef3c7; color: #92400e; font-size: 10px; font-weight: 700; padding: 2px 12px; border-radius: 20px; }
+        .badge-privacy { background: #dbeafe; color: #1e40af; font-size: 10px; font-weight: 700; padding: 2px 12px; border-radius: 20px; }
+        .image-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 0.75rem; }
+        .image-item { transition: all 0.2s; }
+        .image-item.selected { border-color: #22c55e; box-shadow: 0 0 0 2px #22c55e; }
+        .step-circle { width: 32px; height: 32px; border-radius: 50%; background: #22c55e; color: white; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 14px; flex-shrink: 0; }
+        @media (max-width: 640px) { .image-grid { grid-template-columns: repeat(3, 1fr); } }
+        @media (max-width: 400px) { .image-grid { grid-template-columns: repeat(2, 1fr); } }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col">
+
+    <!-- Navigation -->
+    <header class="bg-white/95 backdrop-blur-sm border-b border-slate-200 sticky top-0 z-50 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <a href="index.html" class="flex items-center space-x-3">
+                    <div class="w-10 h-10 bg-gradient-to-br from-brand-500 to-brand-700 rounded-xl flex items-center justify-center text-white shadow-md">
+                        <i class="fa-solid fa-file-pdf text-lg"></i>
+                    </div>
+                    <div>
+                        <span class="font-bold text-xl tracking-tight text-slate-900">PDF<span class="text-brand-600">Imagera</span></span>
+                        <span class="block text-[8px] uppercase font-semibold tracking-wider text-slate-400">Free PDF Tools</span>
+                    </div>
+                </a>
+                <div class="flex items-center space-x-2">
+                    <span class="badge-free"><i class="fa-solid fa-infinity mr-1"></i>Unlimited</span>
+                    <a href="index.html" class="text-sm text-slate-600 hover:text-brand-600 transition-colors"><i class="fa-solid fa-home"></i></a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="gradient-bg border-b border-slate-200/50 py-8 md:py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h1 class="text-3xl sm:text-4xl md:text-5xl font-extrabold text-slate-900 tracking-tight">
+                Free Image to PDF Converter
+            </h1>
+            <p class="mt-3 text-base sm:text-lg text-slate-600 max-w-2xl mx-auto">
+                Convert and combine multiple images into a single <strong>PDF document</strong> instantly.
+                <span class="font-semibold text-brand-600">100% free, unlimited, and private.</span>
+            </p>
+            <div class="mt-4 flex flex-wrap justify-center gap-2">
+                <span class="bg-white px-3 py-1 rounded-full shadow-sm text-xs"><i class="fa-solid fa-check-circle text-brand-500 mr-1"></i>JPG, PNG, WebP</span>
+                <span class="bg-white px-3 py-1 rounded-full shadow-sm text-xs"><i class="fa-solid fa-check-circle text-brand-500 mr-1"></i>Unlimited Images</span>
+                <span class="bg-white px-3 py-1 rounded-full shadow-sm text-xs"><i class="fa-solid fa-check-circle text-brand-500 mr-1"></i>No Uploads</span>
+                <span class="bg-white px-3 py-1 rounded-full shadow-sm text-xs"><i class="fa-solid fa-check-circle text-brand-500 mr-1"></i>Instant Download</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Tool -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-grow w-full">
+        <div class="tool-container">
+
+            <!-- Tool Card -->
+            <div class="bg-white rounded-2xl shadow-xl shadow-slate-200/50 border border-slate-200/80 p-6 sm:p-8">
+                <h2 class="text-xl font-bold text-slate-800 mb-4">Convert Images to PDF Online Free</h2>
+                
+                <!-- Drop Zone -->
+                <div class="drop-zone rounded-2xl p-8 text-center transition-all cursor-pointer" id="dropzone" onclick="document.getElementById('fileInput').click()">
+                    <input type="file" id="fileInput" accept="image/*" multiple class="hidden" onchange="handleFileSelect(event)">
+                    <div class="w-16 h-16 bg-brand-50 rounded-2xl flex items-center justify-center text-brand-600 mx-auto mb-4">
+                        <i class="fa-solid fa-images text-3xl"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-slate-800">Drop images here or click to browse</h3>
+                    <p class="text-sm text-slate-500 mt-1">Select multiple images to combine into a single PDF</p>
+                    <div class="mt-3 flex flex-wrap justify-center gap-2 text-xs text-slate-400">
+                        <span><i class="fa-regular fa-circle-check text-brand-500"></i> JPG, PNG, WebP</span>
+                        <span><i class="fa-regular fa-circle-check text-brand-500"></i> Unlimited files</span>
+                        <span><i class="fa-regular fa-circle-check text-brand-500"></i> 100% private</span>
+                    </div>
+                </div>
+
+                <!-- Controls -->
+                <div id="controls" class="hidden mt-6 bg-slate-50 rounded-xl p-5 border border-slate-200 space-y-4">
+                    <div class="grid grid-cols-1 sm:grid-cols-4 gap-4">
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-600 mb-1">PAGE SIZE</label>
+                            <select id="pageSize" class="w-full bg-white border border-slate-300 rounded-lg p-2.5 text-sm focus:ring-2 focus:ring-brand-500 outline-none">
+                                <option value="a4">A4 Standard</option>
+                                <option value="letter">US Letter</option>
+                                <option value="legal">Legal</option>
+                                <option value="a3">A3</option>
+                                <option value="fit">Fit to Image</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-600 mb-1">ORIENTATION</label>
+                            <select id="orientation" class="w-full bg-white border border-slate-300 rounded-lg p-2.5 text-sm focus:ring-2 focus:ring-brand-500 outline-none">
+                                <option value="portrait">Portrait</option>
+                                <option value="landscape">Landscape</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-600 mb-1">QUALITY</label>
+                            <select id="quality" class="w-full bg-white border border-slate-300 rounded-lg p-2.5 text-sm focus:ring-2 focus:ring-brand-500 outline-none">
+                                <option value="0.7">Standard (70%)</option>
+                                <option value="0.85" selected>High (85%)</option>
+                                <option value="0.95">Maximum (95%)</option>
+                            </select>
+                        </div>
+                        <div class="flex items-end">
+                            <button onclick="convertToPDF()" class="w-full bg-brand-600 hover:bg-brand-700 text-white font-semibold py-2.5 px-4 rounded-lg shadow-md hover:shadow-lg transition-all flex items-center justify-center space-x-2">
+                                <i class="fa-solid fa-file-pdf"></i>
+                                <span>Create PDF</span>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Image Controls -->
+                    <div class="flex flex-wrap gap-2 pt-2 border-t border-slate-200">
+                        <button onclick="moveImageUp()" class="bg-slate-200 hover:bg-slate-300 text-slate-700 text-xs font-semibold px-3 py-1.5 rounded-lg transition-colors flex items-center space-x-1">
+                            <i class="fa-solid fa-arrow-up"></i> Up
+                        </button>
+                        <button onclick="moveImageDown()" class="bg-slate-200 hover:bg-slate-300 text-slate-700 text-xs font-semibold px-3 py-1.5 rounded-lg transition-colors flex items-center space-x-1">
+                            <i class="fa-solid fa-arrow-down"></i> Down
+                        </button>
+                        <button onclick="removeSelected()" class="bg-rose-500 hover:bg-rose-600 text-white text-xs font-semibold px-3 py-1.5 rounded-lg transition-colors flex items-center space-x-1">
+                            <i class="fa-solid fa-trash-can"></i> Remove
+                        </button>
+                        <button onclick="clearAll()" class="bg-slate-200 hover:bg-slate-300 text-slate-700 text-xs font-semibold px-3 py-1.5 rounded-lg transition-colors flex items-center space-x-1">
+                            <i class="fa-solid fa-times"></i> Clear All
+                        </button>
+                        <span class="text-xs text-slate-500 ml-auto self-center" id="imageCount">0 images</span>
+                    </div>
+                    
+                    <div id="progress" class="hidden">
+                        <div class="flex justify-between text-xs font-semibold text-slate-600 mb-1">
+                            <span id="progressText">Processing...</span>
+                            <span id="progressPercent">0%</span>
+                        </div>
+                        <div class="w-full bg-slate-200 rounded-full h-2.5 overflow-hidden">
+                            <div id="progressBar" class="bg-brand-600 h-2.5 rounded-full transition-all duration-300" style="width: 0%"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Output -->
+                <div id="output" class="hidden mt-6">
+                    <div id="imageGrid" class="image-grid max-h-[400px] overflow-y-auto p-2 bg-slate-50 rounded-xl border border-slate-200"></div>
+                </div>
+            </div>
+
+            <!-- How to Use Section -->
+            <div class="mt-8 bg-white rounded-2xl shadow-xl shadow-slate-200/50 border border-slate-200/80 p-6 sm:p-8">
+                <h2 class="text-xl font-bold text-slate-900 mb-4">How to Convert Images to PDF</h2>
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+                    <div class="flex items-start gap-3">
+                        <div class="step-circle">1</div>
+                        <div>
+                            <h3 class="font-bold text-sm text-slate-800">Upload Images</h3>
+                            <p class="text-xs text-slate-500">Drop your images or click to select multiple files.</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start gap-3">
+                        <div class="step-circle">2</div>
+                        <div>
+                            <h3 class="font-bold text-sm text-slate-800">Arrange & Configure</h3>
+                            <p class="text-xs text-slate-500">Drag to reorder, select page size and orientation.</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start gap-3">
+                        <div class="step-circle">3</div>
+                        <div>
+                            <h3 class="font-bold text-sm text-slate-800">Download PDF</h3>
+                            <p class="text-xs text-slate-500">Click create and download your combined PDF instantly.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SEO Content -->
+            <div class="mt-8 bg-white rounded-2xl shadow-xl shadow-slate-200/50 border border-slate-200/80 p-6 sm:p-8 space-y-6">
+                <h2 class="text-xl font-bold text-slate-900">Why Use Our Free Image to PDF Converter?</h2>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
+                        <i class="fa-solid fa-shield-halved text-brand-600 text-xl mb-2"></i>
+                        <h3 class="font-bold text-sm text-slate-800">100% Private</h3>
+                        <p class="text-xs text-slate-500">Your images never leave your device. No uploads to any server. Complete privacy guaranteed.</p>
+                    </div>
+                    <div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
+                        <i class="fa-solid fa-infinity text-brand-600 text-xl mb-2"></i>
+                        <h3 class="font-bold text-sm text-slate-800">Unlimited Usage</h3>
+                        <p class="text-xs text-slate-500">No limits on number of images or file size. Convert as many images as you want, forever.</p>
+                    </div>
+                    <div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
+                        <i class="fa-solid fa-bolt text-brand-600 text-xl mb-2"></i>
+                        <h3 class="font-bold text-sm text-slate-800">Lightning Fast</h3>
+                        <p class="text-xs text-slate-500">Instant PDF generation powered by your device's CPU. No waiting for server queues.</p>
+                    </div>
+                </div>
+
+                <div class="border-t border-slate-200 pt-6">
+                    <h3 class="font-bold text-slate-900 mb-3">Benefits of Converting Images to PDF</h3>
+                    <ul class="space-y-2 text-sm text-slate-600">
+                        <li class="flex items-start gap-2"><i class="fa-solid fa-check-circle text-brand-500 mt-0.5"></i> <span>Combine multiple photos into a single PDF document</span></li>
+                        <li class="flex items-start gap-2"><i class="fa-solid fa-check-circle text-brand-500 mt-0.5"></i> <span>Perfect for sharing photo albums, receipts, or documents</span></li>
+                        <li class="flex items-start gap-2"><i class="fa-solid fa-check-circle text-brand-500 mt-0.5"></i> <span>Supports JPG, PNG, WebP, BMP and more formats</span></li>
+                        <li class="flex items-start gap-2"><i class="fa-solid fa-check-circle text-brand-500 mt-0.5"></i> <span>Choose page size and orientation for professional results</span></li>
+                        <li class="flex items-start gap-2"><i class="fa-solid fa-check-circle text-brand-500 mt-0.5"></i> <span>No software installation required — works in your browser</span></li>
+                    </ul>
+                </div>
+
+                <div class="border-t border-slate-200 pt-6">
+                    <h3 class="font-bold text-slate-900 mb-3">Frequently Asked Questions</h3>
+                    <div class="space-y-3">
+                        <details class="bg-slate-50 p-4 rounded-xl border border-slate-200">
+                            <summary class="font-semibold text-sm text-slate-800 cursor-pointer">Is converting images to PDF really free?</summary>
+                            <p class="text-xs text-slate-600 mt-2">Yes! Our image to PDF converter is completely free with no hidden charges, no registration, and absolutely no file limits.</p>
+                        </details>
+                        <details class="bg-slate-50 p-4 rounded-xl border border-slate-200">
+                            <summary class="font-semibold text-sm text-slate-800 cursor-pointer">What image formats are supported?</summary>
+                            <p class="text-xs text-slate-600 mt-2">We support all major image formats including JPG, PNG, WebP, BMP, GIF, and TIFF. All formats are converted seamlessly.</p>
+                        </details>
+                        <details class="bg-slate-50 p-4 rounded-xl border border-slate-200">
+                            <summary class="font-semibold text-sm text-slate-800 cursor-pointer">How many images can I convert?</summary>
+                            <p class="text-xs text-slate-600 mt-2">There is no limit! You can convert as many images as you want. All pages will be combined into a single PDF.</p>
+                        </details>
+                        <details class="bg-slate-50 p-4 rounded-xl border border-slate-200">
+                            <summary class="font-semibold text-sm text-slate-800 cursor-pointer">Can I reorder images before conversion?</summary>
+                            <p class="text-xs text-slate-600 mt-2">Yes! You can drag and drop images to reorder them or use the Move Up/Down buttons to arrange them as needed.</p>
+                        </details>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CTA Section -->
+            <div class="mt-8 bg-gradient-to-r from-brand-500 to-brand-700 rounded-2xl p-8 text-center text-white">
+                <h2 class="text-2xl font-bold">Start Converting Images to PDF Now</h2>
+                <p class="text-sm text-white/90 mt-2 max-w-2xl mx-auto">
+                    It's completely free, unlimited, and takes just seconds. Your privacy is guaranteed.
+                </p>
+                <a href="#dropzone" class="inline-block mt-4 bg-white text-brand-600 hover:bg-slate-50 font-bold px-8 py-3 rounded-xl shadow-lg transition-all hover:scale-105">
+                    <i class="fa-solid fa-arrow-up"></i> Upload Images Now
+                </a>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-slate-200 mt-12 py-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col sm:flex-row items-center justify-between text-xs text-slate-500 space-y-4 sm:space-y-0">
+                <p>&copy; 2026 PDFImagera. Free Image to PDF Converter.</p>
+                <div class="flex flex-wrap justify-center gap-4 sm:gap-6">
+                    <a href="index.html" class="hover:text-slate-800 transition-colors">Home</a>
+                    <a href="image-to-pdf.html" class="hover:text-slate-800 transition-colors">Image to PDF</a>
+                    <a href="privacy.html" class="hover:text-slate-800 transition-colors">Privacy</a>
+                    <a href="terms.html" class="hover:text-slate-800 transition-colors">Terms</a>
+                    <a href="sitemap.xml" class="hover:text-slate-800 transition-colors">Sitemap</a>
+                </div>
+            </div>
+            <div class="mt-4 text-center text-[10px] text-slate-400">
+                <span>100% Client-Side Processing • No Uploads • Unlimited Usage • GDPR Compliant</span>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        let state = { images: [], selectedIndex: -1 };
+        let isProcessing = false;
+
+        function handleFileSelect(e) {
+            const files = Array.from(e.target.files).filter(f => f.type.startsWith('image/'));
+            if (files.length === 0) {
+                alert('Please select valid image files.');
+                return;
+            }
+            state.images = [...state.images, ...files];
+            state.selectedIndex = -1;
+            updateGrid();
+            document.getElementById('controls').classList.remove('hidden');
+            document.getElementById('output').classList.remove('hidden');
+            document.querySelector('.drop-zone h3').textContent = `📸 ${state.images.length} images loaded`;
+            document.querySelector('.drop-zone p').textContent = 'Click to add more images';
+            showToast(`Loaded ${files.length} images`, 'success');
+        }
+
+        function updateGrid() {
+            const grid = document.getElementById('imageGrid');
+            grid.innerHTML = '';
+            document.getElementById('imageCount').textContent = `${state.images.length} images`;
+            
+            state.images.forEach((file, idx) => {
+                const url = URL.createObjectURL(file);
+                const card = document.createElement('div');
+                card.className = `image-item bg-white p-2 rounded-xl border-2 ${state.selectedIndex === idx ? 'selected border-brand-500' : 'border-slate-200'} cursor-pointer transition-all hover:shadow-md relative`;
+                card.dataset.index = idx;
+                
+                card.innerHTML = `
+                    <img src="${url}" class="w-full h-20 object-contain rounded">
+                    <span class="text-[9px] text-slate-500 truncate w-full block text-center mt-1">${file.name}</span>
+                    <span class="text-[8px] text-slate-400 block text-center">#${idx + 1}</span>
+                    <button onclick="event.stopPropagation(); removeImage(${idx})" class="absolute -top-2 -right-2 bg-rose-500 hover:bg-rose-600 text-white w-5 h-5 rounded-full flex items-center justify-center text-xs shadow-md">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                `;
+                
+                card.addEventListener('click', () => {
+                    state.selectedIndex = idx;
+                    updateGrid();
+                });
+                
+                // Drag and Drop
+                card.draggable = true;
+                card.addEventListener('dragstart', (e) => {
+                    e.dataTransfer.effectAllowed = 'move';
+                    e.dataTransfer.setData('text/plain', idx);
+                    card.style.opacity = '0.5';
+                });
+                card.addEventListener('dragend', () => {
+                    card.style.opacity = '1';
+                });
+                card.addEventListener('dragover', (e) => {
+                    e.preventDefault();
+                    card.style.borderColor = '#22c55e';
+                });
+                card.addEventListener('dragleave', () => {
+                    card.style.borderColor = '';
+                });
+                card.addEventListener('drop', (e) => {
+                    e.preventDefault();
+                    card.style.borderColor = '';
+                    const fromIdx = parseInt(e.dataTransfer.getData('text/plain'));
+                    const toIdx = parseInt(card.dataset.index);
+                    if (fromIdx !== toIdx) {
+                        const [moved] = state.images.splice(fromIdx, 1);
+                        state.images.splice(toIdx, 0, moved);
+                        state.selectedIndex = toIdx;
+                        updateGrid();
+                        showToast(`Moved to position ${toIdx + 1}`, 'success');
+                    }
+                });
+                
+                grid.appendChild(card);
+            });
+        }
+
+        function removeImage(index) {
+            state.images.splice(index, 1);
+            state.selectedIndex = -1;
+            updateGrid();
+            if (state.images.length === 0) {
+                document.getElementById('controls').classList.add('hidden');
+                document.getElementById('output').classList.add('hidden');
+                document.querySelector('.drop-zone h3').textContent = 'Drop images here or click to browse';
+                document.querySelector('.drop-zone p').textContent = 'Select multiple images to combine into a single PDF';
+            }
+            showToast('Image removed', 'info');
+        }
+
+        function moveImageUp() {
+            if (state.selectedIndex <= 0 || state.images.length === 0) {
+                showToast('No image selected or already at top', 'info');
+                return;
+            }
+            const idx = state.selectedIndex;
+            [state.images[idx], state.images[idx - 1]] = [state.images[idx - 1], state.images[idx]];
+            state.selectedIndex = idx - 1;
+            updateGrid();
+            showToast('Moved up', 'success');
+        }
+
+        function moveImageDown() {
+            if (state.selectedIndex === -1 || state.selectedIndex >= state.images.length - 1) {
+                showToast('No image selected or already at bottom', 'info');
+                return;
+            }
+            const idx = state.selectedIndex;
+            [state.images[idx], state.images[idx + 1]] = [state.images[idx + 1], state.images[idx]];
+            state.selectedIndex = idx + 1;
+            updateGrid();
+            showToast('Moved down', 'success');
+        }
+
+        function removeSelected() {
+            if (state.selectedIndex === -1 || state.images.length === 0) {
+                showToast('No image selected', 'error');
+                return;
+            }
+            removeImage(state.selectedIndex);
+        }
+
+        function clearAll() {
+            if (state.images.length === 0) return;
+            state.images = [];
+            state.selectedIndex = -1;
+            updateGrid();
+            document.getElementById('controls').classList.add('hidden');
+            document.getElementById('output').classList.add('hidden');
+            document.querySelector('.drop-zone h3').textContent = 'Drop images here or click to browse';
+            document.querySelector('.drop-zone p').textContent = 'Select multiple images to combine into a single PDF';
+            showToast('Cleared all images', 'info');
+        }
+
+        async function convertToPDF() {
+            if (state.images.length === 0 || isProcessing) return;
+            isProcessing = true;
+
+            const pageSize = document.getElementById('pageSize').value;
+            const orientation = document.getElementById('orientation').value;
+            const quality = parseFloat(document.getElementById('quality').value);
+            
+            const progressDiv = document.getElementById('progress');
+            const progressBar = document.getElementById('progressBar');
+            const progressText = document.getElementById('progressText');
+            const progressPercent = document.getElementById('progressPercent');
+
+            progressDiv.classList.remove('hidden');
+            showToast('Creating PDF...', 'info');
+
+            try {
+                const { jsPDF } = window.jspdf;
+                let doc;
+                let isFirstPage = true;
+
+                for (let i = 0; i < state.images.length; i++) {
+                    await new Promise(r => setTimeout(r, 10));
+                    const percent = Math.round(((i + 1) / state.images.length) * 100);
+                    progressText.textContent = `Processing image ${i + 1} of ${state.images.length}`;
+                    progressBar.style.width = percent + '%';
+                    progressPercent.textContent = percent + '%';
+
+                    const file = state.images[i];
+                    const dataUrl = await readFileAsDataURL(file);
+
+                    const img = new Image();
+                    img.src = dataUrl;
+                    await new Promise((resolve, reject) => {
+                        img.onload = resolve;
+                        img.onerror = reject;
+                    });
+
+                    if (pageSize === 'fit') {
+                        const imgWidthMm = img.width * 0.264583;
+                        const imgHeightMm = img.height * 0.264583;
+                        
+                        if (isFirstPage) {
+                            doc = new jsPDF({
+                                orientation: imgWidthMm > imgHeightMm ? 'landscape' : 'portrait',
+                                unit: 'mm',
+                                format: [imgWidthMm, imgHeightMm]
+                            });
+                            isFirstPage = false;
+                        } else {
+                            doc.addPage([imgWidthMm, imgHeightMm]);
+                        }
+                        doc.addImage(dataUrl, 'JPEG', 0, 0, imgWidthMm, imgHeightMm);
+                    } else {
+                        if (isFirstPage) {
+                            doc = new jsPDF({ orientation: orientation, unit: 'mm', format: pageSize });
+                            isFirstPage = false;
+                        } else {
+                            doc.addPage();
+                        }
+                        const pageWidth = doc.internal.pageSize.getWidth();
+                        const pageHeight = doc.internal.pageSize.getHeight();
+                        const ratio = Math.min(pageWidth / img.width, pageHeight / img.height);
+                        const w = img.width * ratio;
+                        const h = img.height * ratio;
+                        const x = (pageWidth - w) / 2;
+                        const y = (pageHeight - h) / 2;
+                        doc.addImage(dataUrl, 'JPEG', x, y, w, h);
+                    }
+                }
+
+                doc.save('combined_images.pdf');
+                showToast('PDF created successfully!', 'success');
+            } catch (err) {
+                console.error(err);
+                showToast('Failed to create PDF: ' + err.message, 'error');
+            } finally {
+                progressDiv.classList.add('hidden');
+                isProcessing = false;
+            }
+        }
+
+        function readFileAsDataURL(file) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onload = () => resolve(reader.result);
+                reader.onerror = reject;
+                reader.readAsDataURL(file);
+            });
+        }
+
+        function showToast(msg, type) {
+            const existing = document.querySelector('.toast-msg');
+            if (existing) existing.remove();
+            const div = document.createElement('div');
+            div.className = `toast-msg fixed bottom-5 right-5 z-50 px-4 py-3 rounded-xl shadow-xl text-xs font-semibold text-white transition-all transform translate-y-2 opacity-0 max-w-sm ${type === 'success' ? 'bg-emerald-600' : type === 'error' ? 'bg-rose-600' : 'bg-slate-900'}`;
+            div.textContent = msg;
+            document.body.appendChild(div);
+            setTimeout(() => div.classList.remove('translate-y-2', 'opacity-0'), 10);
+            setTimeout(() => {
+                div.classList.add('translate-y-2', 'opacity-0');
+                setTimeout(() => div.remove(), 300);
+            }, 3500);
+        }
+
+        // Drag and drop for dropzone
+        const dropzone = document.getElementById('dropzone');
+        ['dragenter', 'dragover'].forEach(eventName => {
+            dropzone.addEventListener(eventName, e => { e.preventDefault(); dropzone.classList.add('drag-over'); });
+        });
+        ['dragleave', 'drop'].forEach(eventName => {
+            dropzone.addEventListener(eventName, e => { e.preventDefault(); dropzone.classList.remove('drag-over'); });
+        });
+        dropzone.addEventListener('drop', e => {
+            e.preventDefault();
+            const files = e.dataTransfer.files;
+            if (files.length) {
+                document.getElementById('fileInput').files = files;
+                handleFileSelect({ target: { files: files } });
+            }
+        });
+    </script>
+</body>
+</html>

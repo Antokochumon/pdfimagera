@@ -1,0 +1,494 @@
+<!-- pdf-to-text.html - Extract Text from PDF Online Free -->
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Free PDF to Text Converter - Extract Text from PDF Online</title>
+    <meta name="description" content="Extract text from PDF online for free. Convert PDF to editable text instantly. Unlimited usage, no registration, 100% private client-side conversion.">
+    <meta name="keywords" content="PDF to text, extract text from PDF, PDF text extractor, free PDF to text, online PDF text extraction, convert PDF to text, unlimited PDF converter">
+    <link rel="canonical" href="https://pdfimagera.com/pdf-to-text">
+    
+    <meta property="og:title" content="Free PDF to Text Converter - Extract Text from PDF Online">
+    <meta property="og:description" content="Extract text from PDF instantly. Free, unlimited, and 100% private. No uploads, no registration required.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://pdfimagera.com/pdf-to-text">
+    
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Free PDF to Text Converter - PDFImagera">
+    <meta name="twitter:description" content="Extract text from PDF online for free. Unlimited usage, complete privacy.">
+    
+    <meta name="robots" content="index, follow">
+    <meta name="googlebot" content="index, follow">
+    <meta name="author" content="PDFImagera">
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "PDF to Text Converter",
+        "description": "Extract text from PDF documents online for free.",
+        "applicationCategory": "Utility",
+        "operatingSystem": "All",
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+    }
+    </script>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: { 50: '#f0fdf4', 100: '#dcfce7', 500: '#22c55e', 600: '#16a34a', 700: '#15803d' }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .gradient-bg { background: linear-gradient(135deg, #fef3c7 0%, #fde68a 50%, #fef3c7 100%); }
+        .tool-container { max-width: 950px; margin: 0 auto; }
+        .drop-zone { border: 2px dashed #cbd5e1; transition: all 0.3s; min-height: 200px; }
+        .drop-zone:hover, .drop-zone.drag-over { border-color: #22c55e; background: #f0fdf4; }
+        .badge-free { background: #dcfce7; color: #15803d; font-size: 10px; font-weight: 700; padding: 2px 12px; border-radius: 20px; }
+        .badge-unlimited { background: #fef3c7; color: #92400e; font-size: 10px; font-weight: 700; padding: 2px 12px; border-radius: 20px; }
+        .badge-privacy { background: #dbeafe; color: #1e40af; font-size: 10px; font-weight: 700; padding: 2px 12px; border-radius: 20px; }
+        .step-circle { width: 32px; height: 32px; border-radius: 50%; background: #d97706; color: white; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 14px; flex-shrink: 0; }
+        .extracted-text { background: #1e293b; color: #e2e8f0; font-family: 'Courier New', monospace; font-size: 12px; line-height: 1.8; white-space: pre-wrap; word-wrap: break-word; }
+        @media (max-width: 640px) { .extracted-text { font-size: 10px; } }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col">
+
+    <!-- Navigation -->
+    <header class="bg-white/95 backdrop-blur-sm border-b border-slate-200 sticky top-0 z-50 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <a href="index.html" class="flex items-center space-x-3">
+                    <div class="w-10 h-10 bg-gradient-to-br from-amber-500 to-amber-700 rounded-xl flex items-center justify-center text-white shadow-md shadow-amber-500/30">
+                        <i class="fa-solid fa-file-pdf text-lg"></i>
+                    </div>
+                    <div>
+                        <span class="font-bold text-xl tracking-tight text-slate-900">PDF<span class="text-amber-600">Imagera</span></span>
+                        <span class="block text-[8px] uppercase font-semibold tracking-wider text-slate-400">Free PDF Tools</span>
+                    </div>
+                </a>
+                <div class="flex items-center space-x-2">
+                    <span class="badge-free"><i class="fa-solid fa-infinity mr-1"></i>Unlimited</span>
+                    <a href="index.html" class="text-sm text-slate-600 hover:text-amber-600 transition-colors"><i class="fa-solid fa-home"></i></a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="gradient-bg border-b border-slate-200/50 py-8 md:py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h1 class="text-3xl sm:text-4xl md:text-5xl font-extrabold text-slate-900 tracking-tight">
+                Free PDF to Text Converter
+            </h1>
+            <p class="mt-3 text-base sm:text-lg text-slate-600 max-w-2xl mx-auto">
+                Extract editable <strong>text from PDF</strong> documents instantly and securely.
+                <span class="font-semibold text-amber-600">100% free, unlimited, and private.</span>
+            </p>
+            <div class="mt-4 flex flex-wrap justify-center gap-2">
+                <span class="bg-white px-3 py-1 rounded-full shadow-sm text-xs"><i class="fa-solid fa-check-circle text-amber-600 mr-1"></i>Accurate Extraction</span>
+                <span class="bg-white px-3 py-1 rounded-full shadow-sm text-xs"><i class="fa-solid fa-check-circle text-amber-600 mr-1"></i>Copy & Download</span>
+                <span class="bg-white px-3 py-1 rounded-full shadow-sm text-xs"><i class="fa-solid fa-check-circle text-amber-600 mr-1"></i>No Uploads</span>
+                <span class="bg-white px-3 py-1 rounded-full shadow-sm text-xs"><i class="fa-solid fa-check-circle text-amber-600 mr-1"></i>Instant Results</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Tool -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-grow w-full">
+        <div class="tool-container">
+
+            <!-- Tool Card -->
+            <div class="bg-white rounded-2xl shadow-xl shadow-slate-200/50 border border-slate-200/80 p-6 sm:p-8">
+                <h2 class="text-xl font-bold text-slate-800 mb-4">Extract Text from PDF Online Free</h2>
+                
+                <!-- Drop Zone -->
+                <div class="drop-zone rounded-2xl p-8 text-center transition-all cursor-pointer" id="dropzone" onclick="document.getElementById('fileInput').click()">
+                    <input type="file" id="fileInput" accept="application/pdf" class="hidden" onchange="handleFileSelect(event)">
+                    <div class="w-16 h-16 bg-amber-50 rounded-2xl flex items-center justify-center text-amber-600 mx-auto mb-4">
+                        <i class="fa-solid fa-file-lines text-3xl"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-slate-800">Drop your PDF here or click to browse</h3>
+                    <p class="text-sm text-slate-500 mt-1">Extract all text content from your PDF</p>
+                    <div class="mt-3 flex flex-wrap justify-center gap-2 text-xs text-slate-400">
+                        <span><i class="fa-regular fa-circle-check text-amber-500"></i> No uploads</span>
+                        <span><i class="fa-regular fa-circle-check text-amber-500"></i> 100% private</span>
+                        <span><i class="fa-regular fa-circle-check text-amber-500"></i> Unlimited</span>
+                    </div>
+                </div>
+
+                <!-- Controls -->
+                <div id="controls" class="hidden mt-6 bg-slate-50 rounded-xl p-5 border border-slate-200 space-y-4">
+                    <div class="flex items-center justify-between flex-wrap gap-2">
+                        <div class="flex items-center gap-3">
+                            <i class="fa-solid fa-file-pdf text-amber-600 text-2xl"></i>
+                            <div>
+                                <span class="font-semibold text-sm text-slate-800" id="fileName">document.pdf</span>
+                                <span class="text-xs text-slate-500 block" id="fileSize">0 MB</span>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <span class="text-xs text-slate-400" id="pageCount">0 pages</span>
+                            <button onclick="removeFile()" class="text-rose-500 hover:text-rose-700 transition-colors">
+                                <i class="fa-solid fa-trash-can"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-600 mb-1">INCLUDE PAGE NUMBERS</label>
+                            <select id="includePageNumbers" class="w-full bg-white border border-slate-300 rounded-lg p-2.5 text-sm focus:ring-2 focus:ring-amber-500 outline-none">
+                                <option value="yes">Yes</option>
+                                <option value="no" selected>No</option>
+                            </select>
+                        </div>
+                        <div class="flex items-end">
+                            <button onclick="extractText()" class="w-full bg-amber-600 hover:bg-amber-700 text-white font-semibold py-2.5 px-4 rounded-lg shadow-md hover:shadow-lg transition-all flex items-center justify-center space-x-2">
+                                <i class="fa-solid fa-file-lines"></i>
+                                <span>Extract Text</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div id="progress" class="hidden">
+                        <div class="flex justify-between text-xs font-semibold text-slate-600 mb-1">
+                            <span id="progressText">Extracting text...</span>
+                            <span id="progressPercent">0%</span>
+                        </div>
+                        <div class="w-full bg-slate-200 rounded-full h-2.5 overflow-hidden">
+                            <div id="progressBar" class="bg-amber-500 h-2.5 rounded-full transition-all duration-300" style="width: 0%"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Output -->
+                <div id="output" class="hidden mt-6">
+                    <div class="flex items-center justify-between mb-3 flex-wrap gap-2">
+                        <div class="flex items-center gap-2">
+                            <span class="text-sm font-bold text-slate-700">Extracted Text</span>
+                            <span class="text-xs text-slate-400" id="wordCount">0 words</span>
+                        </div>
+                        <div class="flex space-x-2 flex-wrap">
+                            <button onclick="copyText()" class="bg-slate-200 hover:bg-slate-300 text-slate-700 text-xs font-semibold px-3 py-1.5 rounded-lg transition-colors flex items-center space-x-1">
+                                <i class="fa-regular fa-copy"></i>
+                                <span>Copy</span>
+                            </button>
+                            <button onclick="downloadText()" class="bg-amber-600 hover:bg-amber-700 text-white text-xs font-semibold px-3 py-1.5 rounded-lg transition-colors flex items-center space-x-1">
+                                <i class="fa-solid fa-download"></i>
+                                <span>Download .TXT</span>
+                            </button>
+                            <button onclick="clearOutput()" class="bg-slate-200 hover:bg-slate-300 text-slate-700 text-xs font-semibold px-3 py-1.5 rounded-lg transition-colors flex items-center space-x-1">
+                                <i class="fa-solid fa-trash-can"></i>
+                                <span>Clear</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div id="textResult" class="extracted-text rounded-xl p-4 max-h-[500px] overflow-y-auto"></div>
+                </div>
+            </div>
+
+            <!-- How to Use Section -->
+            <div class="mt-8 bg-white rounded-2xl shadow-xl shadow-slate-200/50 border border-slate-200/80 p-6 sm:p-8">
+                <h2 class="text-xl font-bold text-slate-900 mb-4">How to Extract Text from PDF</h2>
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+                    <div class="flex items-start gap-3">
+                        <div class="step-circle">1</div>
+                        <div>
+                            <h3 class="font-bold text-sm text-slate-800">Upload PDF</h3>
+                            <p class="text-xs text-slate-500">Drop your PDF file or click to select it.</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start gap-3">
+                        <div class="step-circle">2</div>
+                        <div>
+                            <h3 class="font-bold text-sm text-slate-800">Extract Text</h3>
+                            <p class="text-xs text-slate-500">Click extract and wait for processing.</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start gap-3">
+                        <div class="step-circle">3</div>
+                        <div>
+                            <h3 class="font-bold text-sm text-slate-800">Copy or Download</h3>
+                            <p class="text-xs text-slate-500">Copy to clipboard or download as .txt.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SEO Content -->
+            <div class="mt-8 bg-white rounded-2xl shadow-xl shadow-slate-200/50 border border-slate-200/80 p-6 sm:p-8 space-y-6">
+                <h2 class="text-xl font-bold text-slate-900">Why Use Our Free PDF to Text Converter?</h2>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
+                        <i class="fa-solid fa-shield-halved text-amber-600 text-xl mb-2"></i>
+                        <h3 class="font-bold text-sm text-slate-800">100% Private</h3>
+                        <p class="text-xs text-slate-500">Your PDF never leaves your device. Complete privacy guaranteed.</p>
+                    </div>
+                    <div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
+                        <i class="fa-solid fa-infinity text-amber-600 text-xl mb-2"></i>
+                        <h3 class="font-bold text-sm text-slate-800">Unlimited Usage</h3>
+                        <p class="text-xs text-slate-500">No limits on file size or number of extractions. Extract as many as you want.</p>
+                    </div>
+                    <div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
+                        <i class="fa-solid fa-bolt text-amber-600 text-xl mb-2"></i>
+                        <h3 class="font-bold text-sm text-slate-800">Lightning Fast</h3>
+                        <p class="text-xs text-slate-500">Instant extraction powered by PDF.js. No waiting for server queues.</p>
+                    </div>
+                </div>
+
+                <div class="border-t border-slate-200 pt-6">
+                    <h3 class="font-bold text-slate-900 mb-3">Benefits of Extracting Text from PDF</h3>
+                    <ul class="space-y-2 text-sm text-slate-600">
+                        <li class="flex items-start gap-2"><i class="fa-solid fa-check-circle text-amber-500 mt-0.5"></i> <span>Extract editable text from any PDF document</span></li>
+                        <li class="flex items-start gap-2"><i class="fa-solid fa-check-circle text-amber-500 mt-0.5"></i> <span>Perfect for copying content from PDFs to other documents</span></li>
+                        <li class="flex items-start gap-2"><i class="fa-solid fa-check-circle text-amber-500 mt-0.5"></i> <span>Supports multi-page PDFs with page number options</span></li>
+                        <li class="flex items-start gap-2"><i class="fa-solid fa-check-circle text-amber-500 mt-0.5"></i> <span>Copy to clipboard or download as .txt file</span></li>
+                        <li class="flex items-start gap-2"><i class="fa-solid fa-check-circle text-amber-500 mt-0.5"></i> <span>No software installation required — works in your browser</span></li>
+                    </ul>
+                </div>
+
+                <div class="border-t border-slate-200 pt-6">
+                    <h3 class="font-bold text-slate-900 mb-3">Frequently Asked Questions</h3>
+                    <div class="space-y-3">
+                        <details class="bg-slate-50 p-4 rounded-xl border border-slate-200">
+                            <summary class="font-semibold text-sm text-slate-800 cursor-pointer">Is extracting text from PDF really free?</summary>
+                            <p class="text-xs text-slate-600 mt-2">Yes! Our PDF to text converter is completely free with no hidden charges and no limits.</p>
+                        </details>
+                        <details class="bg-slate-50 p-4 rounded-xl border border-slate-200">
+                            <summary class="font-semibold text-sm text-slate-800 cursor-pointer">How accurate is the text extraction?</summary>
+                            <p class="text-xs text-slate-600 mt-2">We use PDF.js, the industry-standard library, for highly accurate text extraction from PDF documents.</p>
+                        </details>
+                        <details class="bg-slate-50 p-4 rounded-xl border border-slate-200">
+                            <summary class="font-semibold text-sm text-slate-800 cursor-pointer">Can I extract text from scanned PDFs?</summary>
+                            <p class="text-xs text-slate-600 mt-2">Our tool extracts text from selectable text PDFs. For scanned/image PDFs, you'll need OCR (Optical Character Recognition).</p>
+                        </details>
+                        <details class="bg-slate-50 p-4 rounded-xl border border-slate-200">
+                            <summary class="font-semibold text-sm text-slate-800 cursor-pointer">What happens to my PDF after extraction?</summary>
+                            <p class="text-xs text-slate-600 mt-2">Your PDF is processed entirely in your browser. No data is uploaded, stored, or shared with any server.</p>
+                        </details>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CTA Section -->
+            <div class="mt-8 bg-gradient-to-r from-amber-500 to-amber-700 rounded-2xl p-8 text-center text-white">
+                <h2 class="text-2xl font-bold">Start Extracting Text from PDF Now</h2>
+                <p class="text-sm text-white/90 mt-2 max-w-2xl mx-auto">
+                    It's completely free, unlimited, and takes just seconds. Your privacy is guaranteed.
+                </p>
+                <a href="#dropzone" class="inline-block mt-4 bg-white text-amber-600 hover:bg-slate-50 font-bold px-8 py-3 rounded-xl shadow-lg transition-all hover:scale-105">
+                    <i class="fa-solid fa-arrow-up"></i> Upload PDF Now
+                </a>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-slate-200 mt-12 py-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col sm:flex-row items-center justify-between text-xs text-slate-500 space-y-4 sm:space-y-0">
+                <p>&copy; 2026 PDFImagera. Free PDF to Text Converter.</p>
+                <div class="flex flex-wrap justify-center gap-4 sm:gap-6">
+                    <a href="index.html" class="hover:text-slate-800 transition-colors">Home</a>
+                    <a href="pdf-to-text.html" class="hover:text-amber-600 transition-colors">PDF to Text</a>
+                    <a href="privacy.html" class="hover:text-slate-800 transition-colors">Privacy</a>
+                    <a href="terms.html" class="hover:text-slate-800 transition-colors">Terms</a>
+                    <a href="sitemap.xml" class="hover:text-slate-800 transition-colors">Sitemap</a>
+                </div>
+            </div>
+            <div class="mt-4 text-center text-[10px] text-slate-400">
+                <span>100% Client-Side Processing • No Uploads • Unlimited Usage • GDPR Compliant</span>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+        
+        let state = { file: null, extractedText: '' };
+        let isProcessing = false;
+
+        function handleFileSelect(e) {
+            const file = e.target.files[0];
+            if (!file || file.type !== 'application/pdf') {
+                showToast('Please select a valid PDF file.', 'error');
+                return;
+            }
+            state.file = file;
+            document.getElementById('controls').classList.remove('hidden');
+            document.getElementById('output').classList.add('hidden');
+            document.getElementById('fileName').textContent = file.name;
+            document.getElementById('fileSize').textContent = (file.size / 1024 / 1024).toFixed(2) + ' MB';
+            document.querySelector('.drop-zone h3').textContent = `📄 ${file.name}`;
+            document.querySelector('.drop-zone p').textContent = 'Click to change file';
+            document.getElementById('pageCount').textContent = 'Loading...';
+            
+            // Get page count
+            const reader = new FileReader();
+            reader.onload = async function(e) {
+                try {
+                    const arrayBuffer = e.target.result;
+                    const loadingTask = pdfjsLib.getDocument({ data: arrayBuffer });
+                    const pdf = await loadingTask.promise;
+                    document.getElementById('pageCount').textContent = pdf.numPages + ' pages';
+                } catch (err) {
+                    document.getElementById('pageCount').textContent = '? pages';
+                }
+            };
+            reader.readAsArrayBuffer(file);
+            showToast(`Loaded "${file.name}"`, 'success');
+        }
+
+        function removeFile() {
+            state.file = null;
+            state.extractedText = '';
+            document.getElementById('controls').classList.add('hidden');
+            document.getElementById('output').classList.add('hidden');
+            document.querySelector('.drop-zone h3').textContent = 'Drop your PDF here or click to browse';
+            document.querySelector('.drop-zone p').textContent = 'Extract all text content from your PDF';
+            document.getElementById('fileInput').value = '';
+            showToast('File removed', 'info');
+        }
+
+        async function extractText() {
+            if (!state.file || isProcessing) return;
+            isProcessing = true;
+
+            const includePageNumbers = document.getElementById('includePageNumbers').value === 'yes';
+            
+            const progressDiv = document.getElementById('progress');
+            const progressBar = document.getElementById('progressBar');
+            const progressText = document.getElementById('progressText');
+            const progressPercent = document.getElementById('progressPercent');
+
+            progressDiv.classList.remove('hidden');
+            showToast('Extracting text from PDF...', 'info');
+
+            try {
+                const arrayBuffer = await state.file.arrayBuffer();
+                const loadingTask = pdfjsLib.getDocument({ data: arrayBuffer });
+                const pdf = await loadingTask.promise;
+                let fullText = '';
+
+                for (let i = 1; i <= pdf.numPages; i++) {
+                    await new Promise(r => setTimeout(r, 10));
+                    const percent = Math.round((i / pdf.numPages) * 100);
+                    progressText.textContent = `Page ${i} of ${pdf.numPages}`;
+                    progressBar.style.width = percent + '%';
+                    progressPercent.textContent = percent + '%';
+
+                    const page = await pdf.getPage(i);
+                    const textContent = await page.getTextContent();
+                    const pageText = textContent.items.map(item => item.str).join(' ');
+                    
+                    if (includePageNumbers) {
+                        fullText += `--- Page ${i} ---\n${pageText}\n\n`;
+                    } else {
+                        fullText += `${pageText}\n\n`;
+                    }
+                }
+
+                state.extractedText = fullText.trim();
+                document.getElementById('textResult').textContent = state.extractedText || '(No text found)';
+                document.getElementById('wordCount').textContent = state.extractedText ? state.extractedText.split(/\s+/).length + ' words' : '0 words';
+                document.getElementById('output').classList.remove('hidden');
+                progressDiv.classList.add('hidden');
+                showToast('Text extracted successfully!', 'success');
+            } catch (err) {
+                console.error(err);
+                showToast('Failed to extract text from PDF.', 'error');
+                progressDiv.classList.add('hidden');
+            } finally {
+                isProcessing = false;
+            }
+        }
+
+        function copyText() {
+            if (!state.extractedText) {
+                showToast('No text to copy.', 'error');
+                return;
+            }
+            navigator.clipboard.writeText(state.extractedText).then(() => {
+                showToast('Text copied to clipboard!', 'success');
+            }).catch(() => {
+                const textarea = document.createElement('textarea');
+                textarea.value = state.extractedText;
+                document.body.appendChild(textarea);
+                textarea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textarea);
+                showToast('Text copied to clipboard!', 'success');
+            });
+        }
+
+        function downloadText() {
+            if (!state.extractedText) {
+                showToast('No text to download.', 'error');
+                return;
+            }
+            const blob = new Blob([state.extractedText], { type: 'text/plain;charset=utf-8' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = state.file.name.replace('.pdf', '_extracted.txt');
+            link.click();
+            showToast('Text file downloaded!', 'success');
+        }
+
+        function clearOutput() {
+            state.extractedText = '';
+            document.getElementById('textResult').textContent = '';
+            document.getElementById('wordCount').textContent = '0 words';
+            document.getElementById('output').classList.add('hidden');
+            showToast('Cleared extracted text', 'info');
+        }
+
+        function showToast(msg, type) {
+            const existing = document.querySelector('.toast-msg');
+            if (existing) existing.remove();
+            const div = document.createElement('div');
+            div.className = `toast-msg fixed bottom-5 right-5 z-50 px-4 py-3 rounded-xl shadow-xl text-xs font-semibold text-white transition-all transform translate-y-2 opacity-0 max-w-sm ${type === 'success' ? 'bg-emerald-600' : type === 'error' ? 'bg-rose-600' : 'bg-slate-900'}`;
+            div.textContent = msg;
+            document.body.appendChild(div);
+            setTimeout(() => div.classList.remove('translate-y-2', 'opacity-0'), 10);
+            setTimeout(() => {
+                div.classList.add('translate-y-2', 'opacity-0');
+                setTimeout(() => div.remove(), 300);
+            }, 3500);
+        }
+
+        const dropzone = document.getElementById('dropzone');
+        ['dragenter', 'dragover'].forEach(eventName => {
+            dropzone.addEventListener(eventName, e => { e.preventDefault(); dropzone.classList.add('drag-over'); });
+        });
+        ['dragleave', 'drop'].forEach(eventName => {
+            dropzone.addEventListener(eventName, e => { e.preventDefault(); dropzone.classList.remove('drag-over'); });
+        });
+        dropzone.addEventListener('drop', e => {
+            e.preventDefault();
+            const files = e.dataTransfer.files;
+            if (files.length) {
+                document.getElementById('fileInput').files = files;
+                handleFileSelect({ target: { files: files } });
+            }
+        });
+    </script>
+</body>
+</html>

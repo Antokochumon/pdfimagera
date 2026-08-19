@@ -1,0 +1,340 @@
+<!-- contact.html - Contact PDFImagera -->
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact PDFImagera - Free PDF Tools Support</title>
+    <meta name="description" content="Contact PDFImagera for support, feedback, or inquiries. We're here to help with your PDF tool needs. Free, unlimited PDF tools support.">
+    <meta name="keywords" content="contact PDF tools, support, feedback, PDF help, get in touch, PDFImagera contact">
+    <link rel="canonical" href="https://pdfimagera.com/contact">
+    
+    <meta property="og:title" content="Contact PDFImagera - Free PDF Tools Support">
+    <meta property="og:description" content="Get in touch with PDFImagera for support, feedback, or inquiries.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://pdfimagera.com/contact">
+    
+    <meta name="robots" content="index, follow">
+    <meta name="googlebot" content="index, follow">
+    <meta name="author" content="PDFImagera">
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "ContactPage",
+        "name": "Contact PDFImagera",
+        "description": "Contact page for PDFImagera support and inquiries",
+        "url": "https://pdfimagera.com/contact"
+    }
+    </script>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: { 50: '#f0fdf4', 100: '#dcfce7', 500: '#22c55e', 600: '#16a34a', 700: '#15803d' }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .gradient-bg { background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 50%, #f0fdf4 100%); }
+        .contact-card { background: white; border-radius: 1rem; padding: 2rem; border: 1px solid #e2e8f0; transition: all 0.3s; }
+        .contact-card:hover { box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.1); }
+        .form-input { width: 100%; padding: 0.75rem 1rem; border: 1px solid #e2e8f0; border-radius: 0.75rem; font-size: 0.9rem; transition: all 0.3s; background: #f8fafc; }
+        .form-input:focus { outline: none; border-color: #22c55e; box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.1); background: white; }
+        .form-input::placeholder { color: #94a3b8; }
+        .form-textarea { min-height: 150px; resize: vertical; }
+        .submit-btn { background: #16a34a; color: white; padding: 0.75rem 2rem; border-radius: 0.75rem; font-weight: 600; transition: all 0.3s; cursor: pointer; border: none; width: 100%; }
+        .submit-btn:hover { background: #15803d; transform: translateY(-2px); box-shadow: 0 10px 20px -10px rgba(22, 163, 74, 0.3); }
+        .badge-free { background: #dcfce7; color: #15803d; font-size: 10px; font-weight: 700; padding: 2px 12px; border-radius: 20px; }
+        .badge-privacy { background: #dbeafe; color: #1e40af; font-size: 10px; font-weight: 700; padding: 2px 12px; border-radius: 20px; }
+        .info-item { display: flex; align-items: center; gap: 0.75rem; padding: 0.75rem; border-radius: 0.5rem; background: #f8fafc; transition: all 0.3s; }
+        .info-item:hover { background: #f1f5f9; }
+        .info-item i { width: 20px; color: #16a34a; }
+        .info-item a { color: #0f172a; text-decoration: none; transition: color 0.3s; }
+        .info-item a:hover { color: #16a34a; }
+        .success-message { display: none; background: #dcfce7; border: 1px solid #86efac; border-radius: 0.75rem; padding: 1.5rem; text-align: center; }
+        .success-message i { font-size: 3rem; color: #16a34a; }
+        .success-message h3 { font-weight: 700; color: #166534; margin-top: 0.5rem; }
+        .success-message p { color: #15803d; font-size: 0.9rem; margin-top: 0.25rem; }
+        @media (max-width: 640px) {
+            .contact-card { padding: 1.25rem; }
+            .info-item { font-size: 0.85rem; }
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col">
+
+    <!-- Navigation -->
+    <header class="bg-white/95 backdrop-blur-sm border-b border-slate-200 sticky top-0 z-50 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <a href="index.html" class="flex items-center space-x-3">
+                    <div class="w-10 h-10 bg-gradient-to-br from-brand-500 to-brand-700 rounded-xl flex items-center justify-center text-white shadow-md shadow-brand-500/30">
+                        <i class="fa-solid fa-file-pdf text-lg"></i>
+                    </div>
+                    <div>
+                        <span class="font-bold text-xl tracking-tight text-slate-900">PDF<span class="text-brand-600">Imagera</span></span>
+                        <span class="block text-[8px] uppercase font-semibold tracking-wider text-slate-400">Free PDF Tools</span>
+                    </div>
+                </a>
+                <div class="flex items-center space-x-2">
+                    <span class="badge-free"><i class="fa-solid fa-infinity mr-1"></i>Unlimited</span>
+                    <a href="index.html" class="text-sm text-slate-600 hover:text-brand-600 transition-colors"><i class="fa-solid fa-home"></i></a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="gradient-bg border-b border-slate-200/50 py-8 md:py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h1 class="text-3xl sm:text-4xl md:text-5xl font-extrabold text-slate-900 tracking-tight">
+                Contact Us
+            </h1>
+            <p class="mt-3 text-base text-slate-600 max-w-2xl mx-auto">
+                Have questions or feedback? We'd love to hear from you.
+                <span class="font-semibold text-brand-600">We typically respond within 24 hours.</span>
+            </p>
+            <div class="mt-4 flex flex-wrap justify-center gap-2">
+                <span class="bg-white px-3 py-1 rounded-full shadow-sm text-xs"><i class="fa-solid fa-check-circle text-brand-500 mr-1"></i>Quick Response</span>
+                <span class="bg-white px-3 py-1 rounded-full shadow-sm text-xs"><i class="fa-solid fa-check-circle text-brand-500 mr-1"></i>Friendly Support</span>
+                <span class="bg-white px-3 py-1 rounded-full shadow-sm text-xs"><i class="fa-solid fa-check-circle text-brand-500 mr-1"></i>Free Help</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-grow w-full">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+
+            <!-- Contact Form -->
+            <div class="contact-card">
+                <h2 class="text-xl font-bold text-slate-900 mb-2">
+                    <i class="fa-regular fa-paper-plane text-brand-500 mr-2"></i>Send a Message
+                </h2>
+                <p class="text-sm text-slate-500 mb-6">Fill out the form below and we'll get back to you as soon as possible.</p>
+
+                <!-- Success Message -->
+                <div id="successMessage" class="success-message">
+                    <i class="fa-regular fa-circle-check"></i>
+                    <h3>Message Sent Successfully!</h3>
+                    <p>Thank you for contacting us. We'll respond within 24 hours.</p>
+                </div>
+
+                <!-- Contact Form -->
+                <form id="contactForm" action="https://api.web3forms.com/submit" method="POST" onsubmit="return handleSubmit(event)">
+                    <input type="hidden" name="access_key" value="e7c41a84-13db-43e5-af5e-f64eee0e38e3">
+                    <input type="hidden" name="subject" value="New Contact Form Submission - PDFImagera">
+                    <input type="hidden" name="from_name" value="PDFImagera Contact Form">
+                    
+                    <!-- Honeypot -->
+                    <input type="checkbox" name="botcheck" class="hidden" style="display:none;" value="1">
+
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-600 mb-1">Your Name *</label>
+                            <input type="text" name="name" placeholder="John Doe" required class="form-input">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-600 mb-1">Email Address *</label>
+                            <input type="email" name="email" placeholder="you@example.com" required class="form-input">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-600 mb-1">Subject</label>
+                            <input type="text" name="subject" placeholder="What's this about?" class="form-input">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-600 mb-1">Message *</label>
+                            <textarea name="message" placeholder="Tell us how we can help..." required class="form-input form-textarea"></textarea>
+                        </div>
+                        <button type="submit" class="submit-btn">
+                            <i class="fa-regular fa-paper-plane mr-2"></i>
+                            Send Message
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Contact Info & Developer -->
+            <div class="space-y-6">
+
+                <!-- Contact Information -->
+                <div class="contact-card">
+                    <h2 class="text-xl font-bold text-slate-900 mb-4">
+                        <i class="fa-regular fa-address-card text-brand-500 mr-2"></i>Contact Information
+                    </h2>
+                    <div class="space-y-3">
+                        <div class="info-item">
+                            <i class="fa-regular fa-envelope"></i>
+                            <a href="mailto:antokochumon2@gmail.com">antokochumon2@gmail.com</a>
+                        </div>
+                        <div class="info-item">
+                            <i class="fa-regular fa-phone"></i>
+                            <a href="tel:07407266345">07407 266345</a>
+                        </div>
+                        <div class="info-item">
+                            <i class="fa-regular fa-globe"></i>
+                            <a href="https://antokochumon.github.io/Portfolio/" target="_blank">antokochumon.github.io/Portfolio/</a>
+                        </div>
+                        <div class="info-item">
+                            <i class="fa-regular fa-clock"></i>
+                            <span>Response Time: Within 24 hours</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Developer Info -->
+                <div class="contact-card">
+                    <h2 class="text-xl font-bold text-slate-900 mb-4">
+                        <i class="fa-solid fa-code text-brand-500 mr-2"></i>About the Developer
+                    </h2>
+                    <div class="flex items-start gap-4">
+                        <div class="w-16 h-16 bg-gradient-to-br from-brand-500 to-brand-700 rounded-full flex items-center justify-center text-white text-2xl font-bold shadow-md shadow-brand-500/20 flex-shrink-0">
+                            AK
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-slate-800">Anto Kochumon</h3>
+                            <p class="text-sm text-slate-500">Full Stack Web Developer</p>
+                            <div class="flex flex-wrap gap-1 mt-2">
+                                <span class="text-xs bg-slate-100 px-2 py-0.5 rounded-full text-slate-600">React</span>
+                                <span class="text-xs bg-slate-100 px-2 py-0.5 rounded-full text-slate-600">Node.js</span>
+                                <span class="text-xs bg-slate-100 px-2 py-0.5 rounded-full text-slate-600">Python</span>
+                                <span class="text-xs bg-slate-100 px-2 py-0.5 rounded-full text-slate-600">Django</span>
+                                <span class="text-xs bg-slate-100 px-2 py-0.5 rounded-full text-slate-600">MongoDB</span>
+                            </div>
+                            <a href="https://antokochumon.github.io/Portfolio/" target="_blank" class="inline-block mt-2 text-sm text-brand-600 hover:text-brand-700 font-semibold transition-colors">
+                                View Portfolio <i class="fa-solid fa-arrow-right ml-1"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quick Links -->
+                <div class="contact-card">
+                    <h2 class="text-xl font-bold text-slate-900 mb-4">
+                        <i class="fa-solid fa-link text-brand-500 mr-2"></i>Quick Links
+                    </h2>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                        <a href="/" class="flex items-center gap-2 text-sm text-slate-600 hover:text-brand-600 transition-colors p-2 rounded-lg hover:bg-slate-50">
+                            <i class="fa-solid fa-house text-brand-400"></i>
+                            <span>Homepage</span>
+                        </a>
+                        <a href="/privacy" class="flex items-center gap-2 text-sm text-slate-600 hover:text-brand-600 transition-colors p-2 rounded-lg hover:bg-slate-50">
+                            <i class="fa-solid fa-shield-halved text-brand-400"></i>
+                            <span>Privacy Policy</span>
+                        </a>
+                        <a href="/terms" class="flex items-center gap-2 text-sm text-slate-600 hover:text-brand-600 transition-colors p-2 rounded-lg hover:bg-slate-50">
+                            <i class="fa-solid fa-file-contract text-brand-400"></i>
+                            <span>Terms of Service</span>
+                        </a>
+                        <a href="#tools" class="flex items-center gap-2 text-sm text-slate-600 hover:text-brand-600 transition-colors p-2 rounded-lg hover:bg-slate-50">
+                            <i class="fa-solid fa-tools text-brand-400"></i>
+                            <span>All PDF Tools</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Business Hours -->
+                <div class="contact-card bg-brand-50 border-brand-200">
+                    <h2 class="text-xl font-bold text-slate-900 mb-2">
+                        <i class="fa-regular fa-calendar-check text-brand-500 mr-2"></i>Business Hours
+                    </h2>
+                    <div class="grid grid-cols-2 gap-1 text-sm">
+                        <span class="text-slate-600">Monday - Friday:</span>
+                        <span class="text-slate-800 font-medium">9:00 AM - 9:00 PM</span>
+                        <span class="text-slate-600">Saturday:</span>
+                        <span class="text-slate-800 font-medium">9:00 AM - 9:00 PM</span>
+                        <span class="text-slate-600">Sunday:</span>
+                        <span class="text-slate-800 font-medium">9:00 AM - 2:00 PM</span>
+                    </div>
+                    <p class="text-xs text-slate-500 mt-2">
+                        <i class="fa-regular fa-clock mr-1"></i>
+                        We respond to all messages within 24 hours, even on weekends.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-slate-200 mt-12 py-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col sm:flex-row items-center justify-between text-xs text-slate-500 space-y-4 sm:space-y-0">
+                <p>&copy; 2026 PDFImagera. All rights reserved.</p>
+                <div class="flex flex-wrap justify-center gap-4 sm:gap-6">
+                    <a href="index.html" class="hover:text-slate-800 transition-colors">Home</a>
+                    <a href="privacy.html" class="hover:text-slate-800 transition-colors">Privacy</a>
+                    <a href="terms.html" class="hover:text-slate-800 transition-colors">Terms</a>
+                    <a href="contact.html" class="hover:text-brand-600 transition-colors">Contact</a>
+                    <a href="sitemap.xml" class="hover:text-slate-800 transition-colors">Sitemap</a>
+                </div>
+            </div>
+            <div class="mt-4 text-center text-[10px] text-slate-400">
+                <span>100% Client-Side Processing • No Uploads • Unlimited Usage • GDPR Compliant</span>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function handleSubmit(event) {
+            event.preventDefault();
+            
+            const form = document.getElementById('contactForm');
+            const formData = new FormData(form);
+            
+            // Show loading state
+            const submitBtn = form.querySelector('.submit-btn');
+            const originalText = submitBtn.innerHTML;
+            submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i>Sending...';
+            submitBtn.disabled = true;
+            
+            // Send form
+            fetch(form.action, {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // Hide form, show success
+                    form.style.display = 'none';
+                    document.getElementById('successMessage').style.display = 'block';
+                    
+                    // Reset after 5 seconds
+                    setTimeout(() => {
+                        form.reset();
+                        form.style.display = 'block';
+                        document.getElementById('successMessage').style.display = 'none';
+                        submitBtn.innerHTML = originalText;
+                        submitBtn.disabled = false;
+                    }, 5000);
+                } else {
+                    alert('Something went wrong. Please try again or contact us directly.');
+                    submitBtn.innerHTML = originalText;
+                    submitBtn.disabled = false;
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Failed to send message. Please try again or contact us directly.');
+                submitBtn.innerHTML = originalText;
+                submitBtn.disabled = false;
+            });
+            
+            return false;
+        }
+    </script>
+</body>
+</html>

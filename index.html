@@ -1,0 +1,705 @@
+<!-- index.html - Homepage -->
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PDFImagera - Free Unlimited PDF Tools Online | Convert, Merge, Split PDF</title>
+    <meta name="description" content="PDFImagera offers 100% free, unlimited PDF tools online. Convert PDF to JPG, Image to PDF, Merge PDF, Split PDF, PPT to PDF, Excel to PDF & more. No registration, no uploads, complete privacy.">
+    <meta name="keywords" content="free PDF tools, PDF converter, PDF to JPG, image to PDF, merge PDF, split PDF, PPT to PDF, Excel to PDF, online PDF editor, unlimited PDF tools, free PDF converter no signup">
+    <link rel="canonical" href="https://pdfimagera.com/">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="PDFImagera - Free Unlimited PDF Tools Online">
+    <meta property="og:description" content="100% free, unlimited PDF tools. Convert, merge, split, and edit PDFs instantly in your browser. No registration, no uploads, complete privacy.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://pdfimagera.com/">
+    <meta property="og:image" content="https://pdfimagera.com/og-image.jpg">
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="PDFImagera - Free Unlimited PDF Tools Online">
+    <meta name="twitter:description" content="100% free, unlimited PDF tools. Convert, merge, split, and edit PDFs instantly in your browser.">
+    
+    <!-- Additional SEO -->
+    <meta name="robots" content="index, follow">
+    <meta name="googlebot" content="index, follow">
+    <meta name="author" content="PDFImagera">
+    <meta name="language" content="English">
+    <meta name="revisit-after" content="1 days">
+    <meta name="distribution" content="global">
+    <meta name="rating" content="general">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#f0fdf4',
+                            100: '#dcfce7',
+                            500: '#22c55e',
+                            600: '#16a34a',
+                            700: '#15803d',
+                        }
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 0.5s ease-in-out',
+                        'float': 'float 6s ease-in-out infinite',
+                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0', transform: 'translateY(10px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        },
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0px)' },
+                            '50%': { transform: 'translateY(-10px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- PDF Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .gradient-bg {
+            background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 50%, #f0fdf4 100%);
+        }
+        .tool-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+        .tool-card {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid #e2e8f0;
+            background: white;
+            padding: 1.5rem;
+            border-radius: 1rem;
+        }
+        .tool-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.15);
+            border-color: #22c55e;
+        }
+        .tool-card .icon-wrapper {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+        }
+        .badge-free {
+            background: #dcfce7;
+            color: #15803d;
+            font-size: 10px;
+            font-weight: 700;
+            padding: 2px 10px;
+            border-radius: 20px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .badge-unlimited {
+            background: #fef3c7;
+            color: #92400e;
+            font-size: 10px;
+            font-weight: 700;
+            padding: 2px 10px;
+            border-radius: 20px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .badge-privacy {
+            background: #dbeafe;
+            color: #1e40af;
+            font-size: 10px;
+            font-weight: 700;
+            padding: 2px 10px;
+            border-radius: 20px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 900;
+            color: #16a34a;
+            line-height: 1;
+        }
+        @keyframes pulse-green {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+        .animate-pulse-green {
+            animation: pulse-green 2s ease-in-out infinite;
+        }
+        .faq-item summary {
+            cursor: pointer;
+            list-style: none;
+            font-weight: 600;
+            font-size: 14px;
+            color: #1e293b;
+        }
+        .faq-item summary::-webkit-details-marker {
+            display: none;
+        }
+        .faq-item summary::after {
+            content: '▼';
+            float: right;
+            font-size: 12px;
+            transition: transform 0.2s;
+            color: #94a3b8;
+        }
+        .faq-item[open] summary::after {
+            transform: rotate(180deg);
+        }
+        .faq-item {
+            background: #f8fafc;
+            padding: 1rem 1.25rem;
+            border-radius: 0.75rem;
+            border: 1px solid #e2e8f0;
+        }
+        .faq-item p {
+            margin-top: 0.75rem;
+            font-size: 13px;
+            color: #64748b;
+            line-height: 1.6;
+        }
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+        .feature-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem;
+            border-radius: 0.5rem;
+            background: #f8fafc;
+        }
+        .feature-item i {
+            color: #22c55e;
+            font-size: 18px;
+        }
+        .feature-item span {
+            font-size: 13px;
+            color: #334155;
+        }
+        @media (max-width: 640px) {
+            .tool-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 0.75rem;
+            }
+            .tool-card {
+                padding: 1rem;
+            }
+            .tool-card h3 {
+                font-size: 13px;
+            }
+            .stat-number {
+                font-size: 1.75rem;
+            }
+            .feature-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+        @media (max-width: 400px) {
+            .tool-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col">
+
+    <!-- Navigation -->
+    <header class="bg-white/95 backdrop-blur-sm border-b border-slate-200 sticky top-0 z-50 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <a href="index.html" class="flex items-center space-x-3">
+                    <div class="w-10 h-10 bg-gradient-to-br from-brand-500 to-brand-700 rounded-xl flex items-center justify-center text-white shadow-md shadow-brand-500/30 animate-float">
+                        <i class="fa-solid fa-file-pdf text-lg"></i>
+                    </div>
+                    <div>
+                        <span class="font-bold text-xl tracking-tight text-slate-900">PDF<span class="text-brand-600">Imagera</span></span>
+                        <span class="block text-[8px] uppercase font-semibold tracking-wider text-slate-400">Free PDF Tools</span>
+                    </div>
+                </a>
+                <div class="hidden md:flex items-center space-x-1">
+                    <span class="px-3 py-1 bg-brand-50 text-brand-700 rounded-lg text-xs font-semibold flex items-center gap-1">
+                        <i class="fa-solid fa-infinity"></i> Unlimited
+                    </span>
+                    <span class="px-3 py-1 bg-slate-100 text-slate-600 rounded-lg text-xs font-semibold flex items-center gap-1">
+                        <i class="fa-solid fa-lock"></i> No Uploads
+                    </span>
+                    <span class="px-3 py-1 bg-emerald-50 text-emerald-700 rounded-lg text-xs font-semibold flex items-center gap-1">
+                        <i class="fa-solid fa-bolt"></i> Instant
+                    </span>
+                </div>
+                <div class="md:hidden flex items-center space-x-2">
+                    <span class="badge-free"><i class="fa-solid fa-infinity mr-1"></i>Free</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="gradient-bg border-b border-slate-200/50 py-12 md:py-16 lg:py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <div class="inline-flex items-center gap-2 bg-white/80 backdrop-blur-sm px-4 py-1.5 rounded-full shadow-sm mb-6 border border-slate-200/50">
+                <span class="w-2 h-2 bg-brand-500 rounded-full animate-pulse-green"></span>
+                <span class="text-xs font-semibold text-slate-600">100% Free • Unlimited • No Signup</span>
+            </div>
+            <h1 class="text-4xl sm:text-5xl md:text-6xl font-extrabold text-slate-900 tracking-tight leading-tight">
+                Free Unlimited PDF Tools
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-500 to-brand-700 block sm:inline">for Everyone</span>
+            </h1>
+            <p class="mt-4 text-base sm:text-lg text-slate-600 max-w-2xl mx-auto leading-relaxed">
+                Convert, merge, split, and edit PDFs instantly in your browser. 
+                <span class="font-semibold text-brand-600">No uploads, no limits, complete privacy.</span>
+            </p>
+            <div class="mt-6 flex flex-wrap justify-center gap-3">
+                <a href="#tools" class="bg-brand-600 hover:bg-brand-700 text-white font-semibold px-6 py-3 rounded-xl shadow-lg shadow-brand-500/30 transition-all hover:shadow-xl hover:scale-105 flex items-center gap-2">
+                    <i class="fa-solid fa-rocket"></i>
+                    <span>Start Now — It's Free</span>
+                </a>
+                <a href="#faq" class="bg-white hover:bg-slate-50 text-slate-700 font-semibold px-6 py-3 rounded-xl shadow-md transition-all hover:shadow-lg border border-slate-200 flex items-center gap-2">
+                    <i class="fa-solid fa-circle-question"></i>
+                    <span>Learn More</span>
+                </a>
+            </div>
+            <!-- Stats -->
+            <div class="mt-8 flex flex-wrap justify-center gap-8">
+                <div>
+                    <div class="stat-number">12+</div>
+                    <div class="text-xs text-slate-500 font-medium">PDF Tools</div>
+                </div>
+                <div>
+                    <div class="stat-number">∞</div>
+                    <div class="text-xs text-slate-500 font-medium">Unlimited Usage</div>
+                </div>
+                <div>
+                    <div class="stat-number">100%</div>
+                    <div class="text-xs text-slate-500 font-medium">Privacy Guaranteed</div>
+                </div>
+                <div>
+                    <div class="stat-number">0</div>
+                    <div class="text-xs text-slate-500 font-medium">Registration Required</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Container -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-grow w-full">
+
+        <!-- Tools Grid -->
+        <section id="tools" class="scroll-mt-20">
+            <div class="text-center mb-8">
+                <h2 class="text-2xl sm:text-3xl font-bold text-slate-900">All PDF Tools — 100% Free & Unlimited</h2>
+                <p class="text-sm text-slate-500 mt-2">Choose any tool below. All processing happens in your browser — no uploads, no limits.</p>
+            </div>
+
+            <div class="tool-grid">
+                <!-- Tool 1: PDF to Image -->
+                <a href="pdf-to-image.html" class="tool-card no-underline text-slate-800 hover:no-underline group">
+                    <div class="icon-wrapper bg-brand-50 text-brand-600 group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-file-image text-xl"></i>
+                    </div>
+                    <h3 class="font-bold text-base">PDF to Image</h3>
+                    <p class="text-xs text-slate-500 mt-1 leading-relaxed">Convert PDF pages to JPG, PNG, WebP or BMP instantly</p>
+                    <div class="mt-3 flex flex-wrap gap-1">
+                        <span class="badge-free">Free</span>
+                        <span class="badge-unlimited">Unlimited</span>
+                        <span class="badge-privacy">Private</span>
+                    </div>
+                </a>
+
+                <!-- Tool 2: Image to PDF -->
+                <a href="image-to-pdf.html" class="tool-card no-underline text-slate-800 hover:no-underline group">
+                    <div class="icon-wrapper bg-purple-50 text-purple-600 group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-images text-xl"></i>
+                    </div>
+                    <h3 class="font-bold text-base">Image to PDF</h3>
+                    <p class="text-xs text-slate-500 mt-1 leading-relaxed">Combine multiple images into a single professional PDF</p>
+                    <div class="mt-3 flex flex-wrap gap-1">
+                        <span class="badge-free">Free</span>
+                        <span class="badge-unlimited">Unlimited</span>
+                        <span class="badge-privacy">Private</span>
+                    </div>
+                </a>
+
+                <!-- Tool 3: Text to PDF -->
+                <a href="text-to-pdf.html" class="tool-card no-underline text-slate-800 hover:no-underline group">
+                    <div class="icon-wrapper bg-blue-50 text-blue-600 group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-file-pen text-xl"></i>
+                    </div>
+                    <h3 class="font-bold text-base">Text to PDF</h3>
+                    <p class="text-xs text-slate-500 mt-1 leading-relaxed">Convert plain text to styled PDF with fonts and colors</p>
+                    <div class="mt-3 flex flex-wrap gap-1">
+                        <span class="badge-free">Free</span>
+                        <span class="badge-unlimited">Unlimited</span>
+                        <span class="badge-privacy">Private</span>
+                    </div>
+                </a>
+
+                <!-- Tool 4: PPT to PDF -->
+                <a href="ppt-to-pdf.html" class="tool-card no-underline text-slate-800 hover:no-underline group">
+                    <div class="icon-wrapper bg-orange-50 text-orange-600 group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-file-powerpoint text-xl"></i>
+                    </div>
+                    <h3 class="font-bold text-base">PPT to PDF</h3>
+                    <p class="text-xs text-slate-500 mt-1 leading-relaxed">Convert PowerPoint presentations to PDF instantly</p>
+                    <div class="mt-3 flex flex-wrap gap-1">
+                        <span class="badge-free">Free</span>
+                        <span class="badge-unlimited">Unlimited</span>
+                        <span class="badge-privacy">Private</span>
+                    </div>
+                </a>
+
+                <!-- Tool 5: Excel to PDF -->
+                <a href="excel-to-pdf.html" class="tool-card no-underline text-slate-800 hover:no-underline group">
+                    <div class="icon-wrapper bg-green-50 text-green-600 group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-file-excel text-xl"></i>
+                    </div>
+                    <h3 class="font-bold text-base">Excel to PDF</h3>
+                    <p class="text-xs text-slate-500 mt-1 leading-relaxed">Convert Excel spreadsheets to PDF with formatting</p>
+                    <div class="mt-3 flex flex-wrap gap-1">
+                        <span class="badge-free">Free</span>
+                        <span class="badge-unlimited">Unlimited</span>
+                        <span class="badge-privacy">Private</span>
+                    </div>
+                </a>
+
+                <!-- Tool 6: Web to PDF -->
+                <a href="web-to-pdf.html" class="tool-card no-underline text-slate-800 hover:no-underline group">
+                    <div class="icon-wrapper bg-purple-50 text-purple-600 group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-globe text-xl"></i>
+                    </div>
+                    <h3 class="font-bold text-base">Web to PDF</h3>
+                    <p class="text-xs text-slate-500 mt-1 leading-relaxed">Save any webpage as a PDF document</p>
+                    <div class="mt-3 flex flex-wrap gap-1">
+                        <span class="badge-free">Free</span>
+                        <span class="badge-unlimited">Unlimited</span>
+                        <span class="badge-privacy">Private</span>
+                    </div>
+                </a>
+
+                <!-- Tool 7: PDF to Text -->
+                <a href="pdf-to-text.html" class="tool-card no-underline text-slate-800 hover:no-underline group">
+                    <div class="icon-wrapper bg-amber-50 text-amber-600 group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-file-lines text-xl"></i>
+                    </div>
+                    <h3 class="font-bold text-base">PDF to Text</h3>
+                    <p class="text-xs text-slate-500 mt-1 leading-relaxed">Extract clean text content from PDF files</p>
+                    <div class="mt-3 flex flex-wrap gap-1">
+                        <span class="badge-free">Free</span>
+                        <span class="badge-unlimited">Unlimited</span>
+                        <span class="badge-privacy">Private</span>
+                    </div>
+                </a>
+
+                <!-- Tool 8: Merge PDF -->
+                <a href="merge-pdf.html" class="tool-card no-underline text-slate-800 hover:no-underline group">
+                    <div class="icon-wrapper bg-rose-50 text-rose-600 group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-object-ungroup text-xl"></i>
+                    </div>
+                    <h3 class="font-bold text-base">Merge PDF</h3>
+                    <p class="text-xs text-slate-500 mt-1 leading-relaxed">Combine multiple PDFs into a single document</p>
+                    <div class="mt-3 flex flex-wrap gap-1">
+                        <span class="badge-free">Free</span>
+                        <span class="badge-unlimited">Unlimited</span>
+                        <span class="badge-privacy">Private</span>
+                    </div>
+                </a>
+
+                <!-- Tool 9: Split PDF -->
+                <a href="split-pdf.html" class="tool-card no-underline text-slate-800 hover:no-underline group">
+                    <div class="icon-wrapper bg-cyan-50 text-cyan-600 group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-scissors text-xl"></i>
+                    </div>
+                    <h3 class="font-bold text-base">Split PDF</h3>
+                    <p class="text-xs text-slate-500 mt-1 leading-relaxed">Extract specific pages or split every page</p>
+                    <div class="mt-3 flex flex-wrap gap-1">
+                        <span class="badge-free">Free</span>
+                        <span class="badge-unlimited">Unlimited</span>
+                        <span class="badge-privacy">Private</span>
+                    </div>
+                </a>
+
+                <!-- Tool 10: Organize PDF -->
+                <a href="organize-pdf.html" class="tool-card no-underline text-slate-800 hover:no-underline group">
+                    <div class="icon-wrapper bg-indigo-50 text-indigo-600 group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-rotate text-xl"></i>
+                    </div>
+                    <h3 class="font-bold text-base">Organize PDF</h3>
+                    <p class="text-xs text-slate-500 mt-1 leading-relaxed">Rotate, reorder, and remove pages from PDF</p>
+                    <div class="mt-3 flex flex-wrap gap-1">
+                        <span class="badge-free">Free</span>
+                        <span class="badge-unlimited">Unlimited</span>
+                        <span class="badge-privacy">Private</span>
+                    </div>
+                </a>
+
+                <!-- Tool 11: Watermark PDF -->
+                <a href="watermark-pdf.html" class="tool-card no-underline text-slate-800 hover:no-underline group">
+                    <div class="icon-wrapper bg-teal-50 text-teal-600 group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-stamp text-xl"></i>
+                    </div>
+                    <h3 class="font-bold text-base">Watermark PDF</h3>
+                    <p class="text-xs text-slate-500 mt-1 leading-relaxed">Add custom text watermarks to your PDF</p>
+                    <div class="mt-3 flex flex-wrap gap-1">
+                        <span class="badge-free">Free</span>
+                        <span class="badge-unlimited">Unlimited</span>
+                        <span class="badge-privacy">Private</span>
+                    </div>
+                </a>
+
+                <!-- Tool 12: Background Remover -->
+                <a href="background-remover.html" class="tool-card no-underline text-slate-800 hover:no-underline group">
+                    <div class="icon-wrapper bg-pink-50 text-pink-600 group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-wand-magic-sparkles text-xl"></i>
+                    </div>
+                    <h3 class="font-bold text-base">Background Remover</h3>
+                    <p class="text-xs text-slate-500 mt-1 leading-relaxed">AI-powered background removal from images</p>
+                    <div class="mt-3 flex flex-wrap gap-1">
+                        <span class="badge-free">Free</span>
+                        <span class="badge-unlimited">Unlimited</span>
+                        <span class="badge-privacy">Private</span>
+                    </div>
+                </a>
+            </div>
+        </section>
+
+        <!-- Features Section -->
+        <section class="mt-16 bg-white rounded-2xl shadow-xl shadow-slate-200/50 border border-slate-200/80 p-8 sm:p-12">
+            <div class="text-center mb-8">
+                <h2 class="text-2xl sm:text-3xl font-bold text-slate-900">Why PDFImagera is the Best Free PDF Tool</h2>
+                <p class="text-sm text-slate-500 mt-2">Everything you need, completely free and unlimited</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="text-center p-6 rounded-xl bg-slate-50 border border-slate-200">
+                    <div class="w-16 h-16 bg-brand-50 rounded-2xl flex items-center justify-center text-brand-600 mx-auto mb-4">
+                        <i class="fa-solid fa-shield-halved text-2xl"></i>
+                    </div>
+                    <h3 class="font-bold text-slate-800">100% Private & Secure</h3>
+                    <p class="text-xs text-slate-500 mt-2 leading-relaxed">All processing happens in your browser. Your files never leave your device. Zero uploads, zero storage.</p>
+                </div>
+                <div class="text-center p-6 rounded-xl bg-slate-50 border border-slate-200">
+                    <div class="w-16 h-16 bg-brand-50 rounded-2xl flex items-center justify-center text-brand-600 mx-auto mb-4">
+                        <i class="fa-solid fa-infinity text-2xl"></i>
+                    </div>
+                    <h3 class="font-bold text-slate-800">Completely Unlimited</h3>
+                    <p class="text-xs text-slate-500 mt-2 leading-relaxed">No file limits, no daily caps, no paywalls. Convert as many files as you want, forever.</p>
+                </div>
+                <div class="text-center p-6 rounded-xl bg-slate-50 border border-slate-200">
+                    <div class="w-16 h-16 bg-brand-50 rounded-2xl flex items-center justify-center text-brand-600 mx-auto mb-4">
+                        <i class="fa-solid fa-bolt text-2xl"></i>
+                    </div>
+                    <h3 class="font-bold text-slate-800">Lightning Fast</h3>
+                    <p class="text-xs text-slate-500 mt-2 leading-relaxed">Leverages your device's CPU for instant processing. No waiting for server queues or network delays.</p>
+                </div>
+            </div>
+
+            <!-- Feature List -->
+            <div class="mt-8 feature-grid">
+                <div class="feature-item">
+                    <i class="fa-solid fa-check-circle"></i>
+                    <span>No registration required</span>
+                </div>
+                <div class="feature-item">
+                    <i class="fa-solid fa-check-circle"></i>
+                    <span>12+ professional tools</span>
+                </div>
+                <div class="feature-item">
+                    <i class="fa-solid fa-check-circle"></i>
+                    <span>Supports all major formats</span>
+                </div>
+                <div class="feature-item">
+                    <i class="fa-solid fa-check-circle"></i>
+                    <span>Works on all devices</span>
+                </div>
+                <div class="feature-item">
+                    <i class="fa-solid fa-check-circle"></i>
+                    <span>GDPR compliant</span>
+                </div>
+                <div class="feature-item">
+                    <i class="fa-solid fa-check-circle"></i>
+                    <span>No file size limits</span>
+                </div>
+                <div class="feature-item">
+                    <i class="fa-solid fa-check-circle"></i>
+                    <span>Instant download</span>
+                </div>
+                <div class="feature-item">
+                    <i class="fa-solid fa-check-circle"></i>
+                    <span>Ad-free experience</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ Section -->
+        <section id="faq" class="mt-12 scroll-mt-20">
+            <div class="text-center mb-8">
+                <h2 class="text-2xl sm:text-3xl font-bold text-slate-900">Frequently Asked Questions</h2>
+                <p class="text-sm text-slate-500 mt-2">Everything you need to know about PDFImagera</p>
+            </div>
+            
+            <div class="max-w-3xl mx-auto space-y-3" itemscope itemtype="https://schema.org/FAQPage">
+                <details class="faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+                    <summary itemprop="name">Is PDFImagera really 100% free?</summary>
+                    <p itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+                        <span itemprop="text">Yes! PDFImagera is completely free with no hidden charges, no registration, and absolutely no file limits. All 12+ tools are available without any restrictions.</span>
+                    </p>
+                </details>
+                <details class="faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+                    <summary itemprop="name">Are my files uploaded to any server?</summary>
+                    <p itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+                        <span itemprop="text">Never. All processing happens entirely in your browser using WebAssembly and HTML5 Canvas. Your files never leave your device, ensuring complete privacy and security.</span>
+                    </p>
+                </details>
+                <details class="faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+                    <summary itemprop="name">What file types does PDFImagera support?</summary>
+                    <p itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+                        <span itemprop="text">PDFImagera supports PDF, JPG, PNG, WebP, BMP, PPT, PPTX, XLS, XLSX, CSV, and plain text files. You can convert between all these formats seamlessly.</span>
+                    </p>
+                </details>
+                <details class="faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+                    <summary itemprop="name">Is there a file size limit?</summary>
+                    <p itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+                        <span itemprop="text">Since processing is client-side, the maximum file size depends on your device's available RAM. Most modern devices can handle files up to several hundred megabytes without any issues.</span>
+                    </p>
+                </details>
+                <details class="faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+                    <summary itemprop="name">Do I need to create an account?</summary>
+                    <p itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+                        <span itemprop="text">No registration or account creation is required. Simply visit the website, choose your tool, and start converting immediately.</span>
+                    </p>
+                </details>
+                <details class="faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+                    <summary itemprop="name">Can I use PDFImagera on mobile devices?</summary>
+                    <p itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+                        <span itemprop="text">Yes! PDFImagera is fully responsive and works perfectly on smartphones, tablets, and desktop computers. All tools are optimized for mobile use.</span>
+                    </p>
+                </details>
+                <details class="faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+                    <summary itemprop="name">How accurate is the PDF to text extraction?</summary>
+                    <p itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+                        <span itemprop="text">PDFImagera uses the industry-standard PDF.js library for text extraction, providing highly accurate results for most PDF documents, including those with complex layouts.</span>
+                    </p>
+                </details>
+            </div>
+        </section>
+
+        <!-- CTA Section -->
+        <section class="mt-12 bg-gradient-to-r from-brand-500 to-brand-700 rounded-2xl p-8 sm:p-12 text-center text-white">
+            <h2 class="text-2xl sm:text-3xl font-bold">Ready to Convert Your PDFs?</h2>
+            <p class="text-sm sm:text-base text-white/90 mt-2 max-w-2xl mx-auto">
+                Start using PDFImagera now — completely free, unlimited, and without any registration.
+            </p>
+            <div class="mt-6 flex flex-wrap justify-center gap-4">
+                <a href="#tools" class="bg-white text-brand-600 hover:bg-slate-50 font-bold px-8 py-3 rounded-xl shadow-lg transition-all hover:scale-105 flex items-center gap-2">
+                    <i class="fa-solid fa-rocket"></i>
+                    <span>Get Started Free</span>
+                </a>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-slate-200 mt-12 py-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col sm:flex-row items-center justify-between text-xs text-slate-500 space-y-4 sm:space-y-0">
+                <p>&copy; 2026 PDFImagera. All rights reserved. Free Unlimited PDF Tools.</p>
+                <div class="flex flex-wrap justify-center gap-4 sm:gap-6">
+                    <a href="privacy.html" class="hover:text-slate-800 transition-colors">Privacy Policy</a>
+                    <a href="terms.html" class="hover:text-slate-800 transition-colors">Terms of Service</a>
+                    <a href="about.html" class="hover:text-slate-800 transition-colors">About</a>
+                    <a href="contact.html" class="hover:text-slate-800 transition-colors">Contact</a>
+                    <a href="sitemap.xml" class="hover:text-slate-800 transition-colors">Sitemap</a>
+                </div>
+            </div>
+            <div class="mt-4 text-center text-[10px] text-slate-400">
+                <span>100% Client-Side Processing • No Uploads • Unlimited Usage • GDPR Compliant</span>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+
+        // Add schema markup for organization
+        const script = document.createElement('script');
+        script.type = 'application/ld+json';
+        script.textContent = JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Organization",
+            "name": "PDFImagera",
+            "description": "Free unlimited PDF tools online",
+            "url": "https://pdfimagera.com",
+            "logo": "https://pdfimagera.com/logo.png",
+            "sameAs": [
+                "https://twitter.com/pdfimagera",
+                "https://facebook.com/pdfimagera"
+            ],
+            "offers": {
+                "@type": "Offer",
+                "price": "0",
+                "priceCurrency": "USD",
+                "availability": "https://schema.org/InStock"
+            }
+        });
+        document.head.appendChild(script);
+
+        // Breadcrumb schema
+        const breadcrumbScript = document.createElement('script');
+        breadcrumbScript.type = 'application/ld+json';
+        breadcrumbScript.textContent = JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+                {
+                    "@type": "ListItem",
+                    "position": 1,
+                    "name": "Home",
+                    "item": "https://pdfimagera.com/"
+                }
+            ]
+        });
+        document.head.appendChild(breadcrumbScript);
+    </script>
+</body>
+</html>

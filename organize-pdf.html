@@ -1,0 +1,556 @@
+<!-- organize-pdf.html - Organize PDF Pages Online Free -->
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Free Organize PDF - Rotate, Reorder & Remove Pages Online</title>
+    <meta name="description" content="Organize PDF pages online for free. Rotate, reorder, and remove pages from your PDF. Unlimited usage, no registration, 100% private client-side conversion.">
+    <meta name="keywords" content="organize PDF, rotate PDF pages, remove PDF pages, reorder PDF, PDF organizer, free PDF tools, unlimited PDF organizer">
+    <link rel="canonical" href="https://pdfimagera.com/organize-pdf">
+    
+    <meta property="og:title" content="Free Organize PDF - Rotate, Reorder & Remove Pages Online">
+    <meta property="og:description" content="Organize PDF pages instantly. Free, unlimited, and 100% private. No uploads, no registration required.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://pdfimagera.com/organize-pdf">
+    
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Free Organize PDF - PDFImagera">
+    <meta name="twitter:description" content="Organize PDF pages online for free. Unlimited usage, complete privacy.">
+    
+    <meta name="robots" content="index, follow">
+    <meta name="googlebot" content="index, follow">
+    <meta name="author" content="PDFImagera">
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Organize PDF",
+        "description": "Organize PDF pages including rotate, reorder, and remove pages.",
+        "applicationCategory": "Utility",
+        "operatingSystem": "All",
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+    }
+    </script>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: { 50: '#f0fdf4', 100: '#dcfce7', 500: '#22c55e', 600: '#16a34a', 700: '#15803d' }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+    <script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
+
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .gradient-bg { background: linear-gradient(135deg, #e0e7ff 0%, #c7d2fe 50%, #e0e7ff 100%); }
+        .tool-container { max-width: 1000px; margin: 0 auto; }
+        .drop-zone { border: 2px dashed #cbd5e1; transition: all 0.3s; min-height: 200px; }
+        .drop-zone:hover, .drop-zone.drag-over { border-color: #22c55e; background: #f0fdf4; }
+        .badge-free { background: #dcfce7; color: #15803d; font-size: 10px; font-weight: 700; padding: 2px 12px; border-radius: 20px; }
+        .badge-unlimited { background: #fef3c7; color: #92400e; font-size: 10px; font-weight: 700; padding: 2px 12px; border-radius: 20px; }
+        .badge-privacy { background: #dbeafe; color: #1e40af; font-size: 10px; font-weight: 700; padding: 2px 12px; border-radius: 20px; }
+        .step-circle { width: 32px; height: 32px; border-radius: 50%; background: #4f46e5; color: white; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 14px; flex-shrink: 0; }
+        .page-thumbnail { transition: all 0.2s; cursor: pointer; }
+        .page-thumbnail:hover { transform: scale(1.02); }
+        .page-thumbnail.deleted { opacity: 0.3; filter: grayscale(1); }
+        .page-thumbnail .remove-btn { display: none; }
+        .page-thumbnail:hover .remove-btn { display: flex; }
+        .thumbnail-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 1rem; }
+        @media (max-width: 640px) { .thumbnail-grid { grid-template-columns: repeat(2, 1fr); } }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col">
+
+    <!-- Navigation -->
+    <header class="bg-white/95 backdrop-blur-sm border-b border-slate-200 sticky top-0 z-50 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <a href="index.html" class="flex items-center space-x-3">
+                    <div class="w-10 h-10 bg-gradient-to-br from-indigo-500 to-indigo-700 rounded-xl flex items-center justify-center text-white shadow-md shadow-indigo-500/30">
+                        <i class="fa-solid fa-file-pdf text-lg"></i>
+                    </div>
+                    <div>
+                        <span class="font-bold text-xl tracking-tight text-slate-900">PDF<span class="text-indigo-600">Imagera</span></span>
+                        <span class="block text-[8px] uppercase font-semibold tracking-wider text-slate-400">Free PDF Tools</span>
+                    </div>
+                </a>
+                <div class="flex items-center space-x-2">
+                    <span class="badge-free"><i class="fa-solid fa-infinity mr-1"></i>Unlimited</span>
+                    <a href="index.html" class="text-sm text-slate-600 hover:text-indigo-600 transition-colors"><i class="fa-solid fa-home"></i></a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="gradient-bg border-b border-slate-200/50 py-8 md:py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h1 class="text-3xl sm:text-4xl md:text-5xl font-extrabold text-slate-900 tracking-tight">
+                Free Organize PDF - Manage Pages
+            </h1>
+            <p class="mt-3 text-base sm:text-lg text-slate-600 max-w-2xl mx-auto">
+                Rotate, reorder, and remove pages from your PDF document.
+                <span class="font-semibold text-indigo-600">100% free, unlimited, and private.</span>
+            </p>
+            <div class="mt-4 flex flex-wrap justify-center gap-2">
+                <span class="bg-white px-3 py-1 rounded-full shadow-sm text-xs"><i class="fa-solid fa-check-circle text-indigo-600 mr-1"></i>Rotate Pages</span>
+                <span class="bg-white px-3 py-1 rounded-full shadow-sm text-xs"><i class="fa-solid fa-check-circle text-indigo-600 mr-1"></i>Remove Pages</span>
+                <span class="bg-white px-3 py-1 rounded-full shadow-sm text-xs"><i class="fa-solid fa-check-circle text-indigo-600 mr-1"></i>No Uploads</span>
+                <span class="bg-white px-3 py-1 rounded-full shadow-sm text-xs"><i class="fa-solid fa-check-circle text-indigo-600 mr-1"></i>Instant Download</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Tool -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-grow w-full">
+        <div class="tool-container">
+
+            <!-- Tool Card -->
+            <div class="bg-white rounded-2xl shadow-xl shadow-slate-200/50 border border-slate-200/80 p-6 sm:p-8">
+                <h2 class="text-xl font-bold text-slate-800 mb-4">Organize PDF Pages Online Free</h2>
+                
+                <!-- Drop Zone -->
+                <div class="drop-zone rounded-2xl p-8 text-center transition-all cursor-pointer" id="dropzone" onclick="document.getElementById('fileInput').click()">
+                    <input type="file" id="fileInput" accept="application/pdf" class="hidden" onchange="handleFileSelect(event)">
+                    <div class="w-16 h-16 bg-indigo-50 rounded-2xl flex items-center justify-center text-indigo-600 mx-auto mb-4">
+                        <i class="fa-solid fa-rotate text-3xl"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-slate-800">Drop your PDF here or click to browse</h3>
+                    <p class="text-sm text-slate-500 mt-1">Rotate, reorder, or remove pages</p>
+                    <div class="mt-3 flex flex-wrap justify-center gap-2 text-xs text-slate-400">
+                        <span><i class="fa-regular fa-circle-check text-indigo-500"></i> No uploads</span>
+                        <span><i class="fa-regular fa-circle-check text-indigo-500"></i> 100% private</span>
+                        <span><i class="fa-regular fa-circle-check text-indigo-500"></i> Unlimited</span>
+                    </div>
+                </div>
+
+                <!-- Controls -->
+                <div id="controls" class="hidden mt-6 space-y-4">
+                    <div class="flex items-center justify-between flex-wrap gap-2 bg-slate-50 rounded-xl p-4 border border-slate-200">
+                        <div class="flex items-center gap-3">
+                            <i class="fa-solid fa-file-pdf text-indigo-600 text-2xl"></i>
+                            <div>
+                                <span class="font-semibold text-sm text-slate-800" id="fileName">document.pdf</span>
+                                <span class="text-xs text-slate-500 block" id="fileSize">0 MB</span>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <span class="text-xs font-medium bg-indigo-50 text-indigo-700 px-3 py-1 rounded-full" id="pageCount">0 pages</span>
+                            <button onclick="removeFile()" class="text-rose-500 hover:text-rose-700 transition-colors">
+                                <i class="fa-solid fa-trash-can"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Page Thumbnails -->
+                    <div id="thumbnailGrid" class="thumbnail-grid max-h-[500px] overflow-y-auto p-2 bg-slate-50 rounded-xl border border-slate-200"></div>
+
+                    <div class="flex flex-wrap gap-2">
+                        <button onclick="rotateAllPages()" class="bg-indigo-500 hover:bg-indigo-600 text-white text-xs font-semibold px-4 py-2 rounded-lg transition-colors flex items-center space-x-1">
+                            <i class="fa-solid fa-rotate-right"></i>
+                            <span>Rotate All</span>
+                        </button>
+                        <button onclick="removeAllDeleted()" class="bg-rose-500 hover:bg-rose-600 text-white text-xs font-semibold px-4 py-2 rounded-lg transition-colors flex items-center space-x-1">
+                            <i class="fa-solid fa-trash-can"></i>
+                            <span>Remove Marked Pages</span>
+                        </button>
+                        <button onclick="resetAll()" class="bg-slate-200 hover:bg-slate-300 text-slate-700 text-xs font-semibold px-4 py-2 rounded-lg transition-colors flex items-center space-x-1">
+                            <i class="fa-solid fa-undo"></i>
+                            <span>Reset All</span>
+                        </button>
+                    </div>
+
+                    <button onclick="saveOrganizedPDF()" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 px-4 rounded-lg shadow-md hover:shadow-lg transition-all flex items-center justify-center space-x-2">
+                        <i class="fa-solid fa-download"></i>
+                        <span>Save Organized PDF</span>
+                    </button>
+
+                    <div id="progress" class="hidden">
+                        <div class="flex justify-between text-xs font-semibold text-slate-600 mb-1">
+                            <span id="progressText">Processing...</span>
+                            <span id="progressPercent">0%</span>
+                        </div>
+                        <div class="w-full bg-slate-200 rounded-full h-2.5 overflow-hidden">
+                            <div id="progressBar" class="bg-indigo-500 h-2.5 rounded-full transition-all duration-300" style="width: 0%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- How to Use Section -->
+            <div class="mt-8 bg-white rounded-2xl shadow-xl shadow-slate-200/50 border border-slate-200/80 p-6 sm:p-8">
+                <h2 class="text-xl font-bold text-slate-900 mb-4">How to Organize PDF Pages</h2>
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+                    <div class="flex items-start gap-3">
+                        <div class="step-circle">1</div>
+                        <div>
+                            <h3 class="font-bold text-sm text-slate-800">Upload PDF</h3>
+                            <p class="text-xs text-slate-500">Drop your PDF to see all page thumbnails.</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start gap-3">
+                        <div class="step-circle">2</div>
+                        <div>
+                            <h3 class="font-bold text-sm text-slate-800">Organize Pages</h3>
+                            <p class="text-xs text-slate-500">Rotate pages or mark for removal.</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start gap-3">
+                        <div class="step-circle">3</div>
+                        <div>
+                            <h3 class="font-bold text-sm text-slate-800">Download</h3>
+                            <p class="text-xs text-slate-500">Save your organized PDF instantly.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SEO Content -->
+            <div class="mt-8 bg-white rounded-2xl shadow-xl shadow-slate-200/50 border border-slate-200/80 p-6 sm:p-8 space-y-6">
+                <h2 class="text-xl font-bold text-slate-900">Why Use Our Free PDF Organizer?</h2>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
+                        <i class="fa-solid fa-shield-halved text-indigo-600 text-xl mb-2"></i>
+                        <h3 class="font-bold text-sm text-slate-800">100% Private</h3>
+                        <p class="text-xs text-slate-500">Your PDF never leaves your device. Complete privacy guaranteed.</p>
+                    </div>
+                    <div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
+                        <i class="fa-solid fa-infinity text-indigo-600 text-xl mb-2"></i>
+                        <h3 class="font-bold text-sm text-slate-800">Unlimited Usage</h3>
+                        <p class="text-xs text-slate-500">No limits on file size or number of pages. Organize as many as you want.</p>
+                    </div>
+                    <div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
+                        <i class="fa-solid fa-bolt text-indigo-600 text-xl mb-2"></i>
+                        <h3 class="font-bold text-sm text-slate-800">Lightning Fast</h3>
+                        <p class="text-xs text-slate-500">Instant processing with visual page thumbnails. No waiting.</p>
+                    </div>
+                </div>
+
+                <div class="border-t border-slate-200 pt-6">
+                    <h3 class="font-bold text-slate-900 mb-3">Benefits of Organizing PDF Files</h3>
+                    <ul class="space-y-2 text-sm text-slate-600">
+                        <li class="flex items-start gap-2"><i class="fa-solid fa-check-circle text-indigo-500 mt-0.5"></i> <span>Rotate individual pages or all pages at once</span></li>
+                        <li class="flex items-start gap-2"><i class="fa-solid fa-check-circle text-indigo-500 mt-0.5"></i> <span>Remove unwanted pages permanently</span></li>
+                        <li class="flex items-start gap-2"><i class="fa-solid fa-check-circle text-indigo-500 mt-0.5"></i> <span>Visual thumbnail preview of all pages</span></li>
+                        <li class="flex items-start gap-2"><i class="fa-solid fa-check-circle text-indigo-500 mt-0.5"></i> <span>Perfect for fixing scanned document orientation</span></li>
+                        <li class="flex items-start gap-2"><i class="fa-solid fa-check-circle text-indigo-500 mt-0.5"></i> <span>No software installation required — works in your browser</span></li>
+                    </ul>
+                </div>
+
+                <div class="border-t border-slate-200 pt-6">
+                    <h3 class="font-bold text-slate-900 mb-3">Frequently Asked Questions</h3>
+                    <div class="space-y-3">
+                        <details class="bg-slate-50 p-4 rounded-xl border border-slate-200">
+                            <summary class="font-semibold text-sm text-slate-800 cursor-pointer">Is organizing PDF pages really free?</summary>
+                            <p class="text-xs text-slate-600 mt-2">Yes! Our PDF organizer is completely free with no hidden charges, no registration, and absolutely no limits.</p>
+                        </details>
+                        <details class="bg-slate-50 p-4 rounded-xl border border-slate-200">
+                            <summary class="font-semibold text-sm text-slate-800 cursor-pointer">Can I rotate multiple pages at once?</summary>
+                            <p class="text-xs text-slate-600 mt-2">Yes! Use the "Rotate All" button to rotate every page in your PDF by 90 degrees clockwise.</p>
+                        </details>
+                        <details class="bg-slate-50 p-4 rounded-xl border border-slate-200">
+                            <summary class="font-semibold text-sm text-slate-800 cursor-pointer">How do I remove unwanted pages?</summary>
+                            <p class="text-xs text-slate-600 mt-2">Click the "X" button on any page thumbnail to mark it for removal, then click "Remove Marked Pages" to finalize.</p>
+                        </details>
+                        <details class="bg-slate-50 p-4 rounded-xl border border-slate-200">
+                            <summary class="font-semibold text-sm text-slate-800 cursor-pointer">Will the changes affect the original PDF?</summary>
+                            <p class="text-xs text-slate-600 mt-2">No, the original file is never modified. You download a new PDF with your changes applied.</p>
+                        </details>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CTA Section -->
+            <div class="mt-8 bg-gradient-to-r from-indigo-500 to-indigo-700 rounded-2xl p-8 text-center text-white">
+                <h2 class="text-2xl font-bold">Start Organizing PDF Pages Now</h2>
+                <p class="text-sm text-white/90 mt-2 max-w-2xl mx-auto">
+                    It's completely free, unlimited, and takes just seconds. Your privacy is guaranteed.
+                </p>
+                <a href="#dropzone" class="inline-block mt-4 bg-white text-indigo-600 hover:bg-slate-50 font-bold px-8 py-3 rounded-xl shadow-lg transition-all hover:scale-105">
+                    <i class="fa-solid fa-arrow-up"></i> Upload PDF Now
+                </a>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-slate-200 mt-12 py-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col sm:flex-row items-center justify-between text-xs text-slate-500 space-y-4 sm:space-y-0">
+                <p>&copy; 2026 PDFImagera. Free Organize PDF Tool.</p>
+                <div class="flex flex-wrap justify-center gap-4 sm:gap-6">
+                    <a href="index.html" class="hover:text-slate-800 transition-colors">Home</a>
+                    <a href="organize-pdf.html" class="hover:text-indigo-600 transition-colors">Organize PDF</a>
+                    <a href="privacy.html" class="hover:text-slate-800 transition-colors">Privacy</a>
+                    <a href="terms.html" class="hover:text-slate-800 transition-colors">Terms</a>
+                    <a href="sitemap.xml" class="hover:text-slate-800 transition-colors">Sitemap</a>
+                </div>
+            </div>
+            <div class="mt-4 text-center text-[10px] text-slate-400">
+                <span>100% Client-Side Processing • No Uploads • Unlimited Usage • GDPR Compliant</span>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+        
+        let organizeState = { file: null, pages: [], pdfDoc: null };
+        let isProcessing = false;
+
+        async function handleFileSelect(e) {
+            const file = e.target.files[0];
+            if (!file || file.type !== 'application/pdf') {
+                showToast('Please select a valid PDF file.', 'error');
+                return;
+            }
+            organizeState.file = file;
+            document.getElementById('controls').classList.remove('hidden');
+            document.getElementById('fileName').textContent = file.name;
+            document.getElementById('fileSize').textContent = (file.size / 1024 / 1024).toFixed(2) + ' MB';
+            document.querySelector('.drop-zone h3').textContent = `📄 ${file.name}`;
+            document.querySelector('.drop-zone p').textContent = 'Click to change file';
+
+            showToast('Loading page thumbnails...', 'info');
+            await loadThumbnails(file);
+        }
+
+        async function loadThumbnails(file) {
+            try {
+                const arrayBuffer = await file.arrayBuffer();
+                const loadingTask = pdfjsLib.getDocument({ data: arrayBuffer });
+                const pdf = await loadingTask.promise;
+                organizeState.pdfDoc = pdf;
+                organizeState.pages = [];
+
+                const grid = document.getElementById('thumbnailGrid');
+                grid.innerHTML = '';
+
+                for (let i = 1; i <= pdf.numPages; i++) {
+                    await new Promise(r => setTimeout(r, 5));
+                    const page = await pdf.getPage(i);
+                    const viewport = page.getViewport({ scale: 0.3 });
+                    const canvas = document.createElement('canvas');
+                    const context = canvas.getContext('2d');
+                    canvas.height = viewport.height;
+                    canvas.width = viewport.width;
+                    await page.render({ canvasContext: context, viewport }).promise;
+
+                    organizeState.pages.push({ pageNum: i, rotation: 0, deleted: false });
+
+                    const card = document.createElement('div');
+                    card.id = `page-${i}`;
+                    card.className = `page-thumbnail bg-white p-2 rounded-xl border-2 border-slate-200 relative ${organizeState.pages[i-1].deleted ? 'deleted' : ''}`;
+                    card.innerHTML = `
+                        <img src="${canvas.toDataURL()}" class="w-full h-28 object-contain rounded">
+                        <div class="flex items-center justify-between mt-1">
+                            <span class="text-xs font-bold text-slate-600">Pg ${i}</span>
+                            <div class="flex space-x-1">
+                                <button onclick="rotatePage(${i})" class="bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs px-2 py-0.5 rounded transition-colors">
+                                    <i class="fa-solid fa-rotate-right"></i>
+                                </button>
+                                <button onclick="toggleDeletePage(${i})" class="remove-btn bg-rose-500 hover:bg-rose-600 text-white text-xs px-2 py-0.5 rounded transition-colors">
+                                    <i class="fa-solid fa-xmark"></i>
+                                </button>
+                            </div>
+                        </div>
+                        ${organizeState.pages[i-1].deleted ? '<span class="absolute top-2 right-2 bg-rose-500 text-white text-[8px] font-bold px-2 py-0.5 rounded-full">REMOVED</span>' : ''}
+                    `;
+                    grid.appendChild(card);
+                }
+
+                document.getElementById('pageCount').textContent = pdf.numPages + ' pages';
+                showToast('Thumbnails loaded successfully!', 'success');
+            } catch (err) {
+                console.error(err);
+                showToast('Failed to load PDF thumbnails.', 'error');
+            }
+        }
+
+        function rotatePage(pageNum) {
+            const page = organizeState.pages.find(p => p.pageNum === pageNum);
+            if (page && !page.deleted) {
+                page.rotation = (page.rotation + 90) % 360;
+                const imgEl = document.querySelector(`#page-${pageNum} img`);
+                if (imgEl) {
+                    imgEl.style.transform = `rotate(${page.rotation}deg)`;
+                }
+                showToast(`Page ${pageNum} rotated by 90°`, 'info');
+            }
+        }
+
+        function rotateAllPages() {
+            organizeState.pages.forEach((p, idx) => {
+                if (!p.deleted) {
+                    p.rotation = (p.rotation + 90) % 360;
+                    const imgEl = document.querySelector(`#page-${p.pageNum} img`);
+                    if (imgEl) {
+                        imgEl.style.transform = `rotate(${p.rotation}deg)`;
+                    }
+                }
+            });
+            showToast('All pages rotated by 90°', 'success');
+        }
+
+        function toggleDeletePage(pageNum) {
+            const page = organizeState.pages.find(p => p.pageNum === pageNum);
+            if (page) {
+                page.deleted = !page.deleted;
+                const card = document.getElementById(`page-${pageNum}`);
+                if (card) {
+                    card.classList.toggle('deleted');
+                    const badge = card.querySelector('.absolute');
+                    if (badge) {
+                        badge.remove();
+                    } else if (page.deleted) {
+                        const newBadge = document.createElement('span');
+                        newBadge.className = 'absolute top-2 right-2 bg-rose-500 text-white text-[8px] font-bold px-2 py-0.5 rounded-full';
+                        newBadge.textContent = 'REMOVED';
+                        card.appendChild(newBadge);
+                    }
+                }
+                showToast(`Page ${pageNum} ${page.deleted ? 'marked for removal' : 'restored'}`, 'info');
+            }
+        }
+
+        function removeAllDeleted() {
+            const deleted = organizeState.pages.filter(p => p.deleted);
+            if (deleted.length === 0) {
+                showToast('No pages marked for removal.', 'info');
+                return;
+            }
+            deleted.forEach(p => {
+                const card = document.getElementById(`page-${p.pageNum}`);
+                if (card) card.style.display = 'none';
+            });
+            showToast(`Removed ${deleted.length} pages`, 'success');
+        }
+
+        function resetAll() {
+            organizeState.pages.forEach(p => {
+                p.rotation = 0;
+                p.deleted = false;
+                const card = document.getElementById(`page-${p.pageNum}`);
+                if (card) {
+                    card.classList.remove('deleted');
+                    card.style.display = '';
+                    const imgEl = card.querySelector('img');
+                    if (imgEl) imgEl.style.transform = 'rotate(0deg)';
+                    const badge = card.querySelector('.absolute');
+                    if (badge) badge.remove();
+                }
+            });
+            showToast('All pages reset to original state', 'info');
+        }
+
+        function removeFile() {
+            organizeState.file = null;
+            organizeState.pages = [];
+            organizeState.pdfDoc = null;
+            document.getElementById('controls').classList.add('hidden');
+            document.querySelector('.drop-zone h3').textContent = 'Drop your PDF here or click to browse';
+            document.querySelector('.drop-zone p').textContent = 'Rotate, reorder, or remove pages';
+            document.getElementById('fileInput').value = '';
+            document.getElementById('thumbnailGrid').innerHTML = '';
+            showToast('File removed', 'info');
+        }
+
+        async function saveOrganizedPDF() {
+            if (!organizeState.file || isProcessing) return;
+            isProcessing = true;
+
+            const progressDiv = document.getElementById('progress');
+            const progressBar = document.getElementById('progressBar');
+            const progressText = document.getElementById('progressText');
+            const progressPercent = document.getElementById('progressPercent');
+
+            progressDiv.classList.remove('hidden');
+            showToast('Saving organized PDF...', 'info');
+
+            try {
+                const { PDFDocument, degrees } = PDFLib;
+                const arrayBuffer = await organizeState.file.arrayBuffer();
+                const pdfDoc = await PDFDocument.load(arrayBuffer);
+                const newPdf = await PDFDocument.create();
+
+                const activePages = organizeState.pages.filter(p => !p.deleted);
+                const indicesToCopy = activePages.map(p => p.pageNum - 1);
+                const copiedPages = await newPdf.copyPages(pdfDoc, indicesToCopy);
+
+                copiedPages.forEach((page, idx) => {
+                    const originalPageInfo = activePages[idx];
+                    if (originalPageInfo && originalPageInfo.rotation > 0) {
+                        page.setRotation(degrees(page.getRotation().angle + originalPageInfo.rotation));
+                    }
+                    newPdf.addPage(page);
+                });
+
+                progressBar.style.width = '100%';
+                progressPercent.textContent = '100%';
+
+                const pdfBytes = await newPdf.save();
+                const blob = new Blob([pdfBytes], { type: 'application/pdf' });
+                const link = document.createElement('a');
+                link.href = URL.createObjectURL(blob);
+                link.download = `${organizeState.file.name.replace('.pdf', '')}_organized.pdf`;
+                link.click();
+
+                progressDiv.classList.add('hidden');
+                showToast('Organized PDF downloaded successfully!', 'success');
+            } catch (err) {
+                console.error(err);
+                showToast('Failed to save organized PDF: ' + err.message, 'error');
+                progressDiv.classList.add('hidden');
+            } finally {
+                isProcessing = false;
+            }
+        }
+
+        function showToast(msg, type) {
+            const existing = document.querySelector('.toast-msg');
+            if (existing) existing.remove();
+            const div = document.createElement('div');
+            div.className = `toast-msg fixed bottom-5 right-5 z-50 px-4 py-3 rounded-xl shadow-xl text-xs font-semibold text-white transition-all transform translate-y-2 opacity-0 max-w-sm ${type === 'success' ? 'bg-emerald-600' : type === 'error' ? 'bg-rose-600' : 'bg-slate-900'}`;
+            div.textContent = msg;
+            document.body.appendChild(div);
+            setTimeout(() => div.classList.remove('translate-y-2', 'opacity-0'), 10);
+            setTimeout(() => {
+                div.classList.add('translate-y-2', 'opacity-0');
+                setTimeout(() => div.remove(), 300);
+            }, 3500);
+        }
+
+        const dropzone = document.getElementById('dropzone');
+        ['dragenter', 'dragover'].forEach(eventName => {
+            dropzone.addEventListener(eventName, e => { e.preventDefault(); dropzone.classList.add('drag-over'); });
+        });
+        ['dragleave', 'drop'].forEach(eventName => {
+            dropzone.addEventListener(eventName, e => { e.preventDefault(); dropzone.classList.remove('drag-over'); });
+        });
+        dropzone.addEventListener('drop', e => {
+            e.preventDefault();
+            const files = e.dataTransfer.files;
+            if (files.length) {
+                document.getElementById('fileInput').files = files;
+                handleFileSelect({ target: { files: files } });
+            }
+        });
+    </script>
+</body>
+</html>

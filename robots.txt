@@ -1,0 +1,18 @@
+# robots.txt for PDFImagera
+# Allow all crawlers access
+
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://pdfimagera.com/sitemap.xml
+
+# Disallow admin or private directories (if any)
+# Disallow: /admin/
+# Disallow: /private/
+
+# Crawl delay to be respectful
+Crawl-delay: 2
+
+# Specify preferred domain
+Host: https://pdfimagera.com
