@@ -1,90 +1,237 @@
-<!-- 404.html - Page Not Found -->
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Page Not Found - PDFImagera</title>
-    <meta name="robots" content="noindex, follow">
-    
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        brand: { 50: '#f0fdf4', 100: '#dcfce7', 500: '#22c55e', 600: '#16a34a', 700: '#15803d' }
-                    }
-                }
-            }
-        }
-    </script>
-    
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <style>
-        body { font-family: 'Inter', sans-serif; }
-        .gradient-bg { background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 50%, #f0fdf4 100%); }
-    </style>
-</head>
-<body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col">
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"
+        xmlns:news="http://www.google.com/schemas/sitemap-news/0.9"
+        xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
+        http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd
+        http://www.google.com/schemas/sitemap-image/1.1
+        http://www.google.com/schemas/sitemap-image/1.1/sitemap-image.xsd
+        http://www.google.com/schemas/sitemap-news/0.9
+        http://www.google.com/schemas/sitemap-news/0.9/sitemap-news.xsd">
 
-    <!-- Navigation -->
-    <header class="bg-white/95 backdrop-blur-sm border-b border-slate-200 sticky top-0 z-50 shadow-sm">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex items-center justify-between h-16">
-                <a href="/" class="flex items-center space-x-3">
-                    <div class="w-10 h-10 bg-gradient-to-br from-brand-500 to-brand-700 rounded-xl flex items-center justify-center text-white shadow-md shadow-brand-500/30">
-                        <i class="fa-solid fa-file-pdf text-lg"></i>
-                    </div>
-                    <div>
-                        <span class="font-bold text-xl tracking-tight text-slate-900">PDF<span class="text-brand-600">Imagera</span></span>
-                        <span class="block text-[8px] uppercase font-semibold tracking-wider text-slate-400">Free PDF Tools</span>
-                    </div>
-                </a>
-            </div>
-        </div>
-    </header>
+    <!-- ============================================================ -->
+    <!-- HOMEPAGE - HIGHEST PRIORITY                                     -->
+    <!-- ============================================================ -->
+    <url>
+        <loc>https://pdfimagera.com/</loc>
+        <lastmod>2026-08-19</lastmod>
+        <changefreq>daily</changefreq>
+        <priority>1.0</priority>
+        <image:image>
+            <image:loc>https://pdfimagera.com/logo.png</image:loc>
+            <image:title>PDFImagera - Free Unlimited PDF Tools</image:title>
+            <image:caption>Convert, merge, split, and edit PDFs for free online</image:caption>
+        </image:image>
+    </url>
 
-    <!-- 404 Content -->
-    <main class="flex-grow flex items-center justify-center px-4">
-        <div class="text-center max-w-2xl">
-            <div class="text-8xl sm:text-9xl font-extrabold text-brand-500 mb-4">404</div>
-            <h1 class="text-3xl sm:text-4xl font-bold text-slate-900 mb-4">Page Not Found</h1>
-            <p class="text-base text-slate-600 mb-8">
-                Oops! The page you're looking for doesn't exist or has been moved.
-                But don't worry, we've got plenty of free PDF tools to help you.
-            </p>
-            <div class="flex flex-wrap justify-center gap-4">
-                <a href="/" class="bg-brand-600 hover:bg-brand-700 text-white font-semibold px-6 py-3 rounded-xl shadow-lg shadow-brand-500/30 transition-all hover:scale-105 flex items-center gap-2">
-                    <i class="fa-solid fa-house"></i>
-                    <span>Back to Home</span>
-                </a>
-                <a href="#tools" class="bg-white hover:bg-slate-50 text-slate-700 font-semibold px-6 py-3 rounded-xl shadow-md border border-slate-200 transition-all flex items-center gap-2">
-                    <i class="fa-solid fa-tools"></i>
-                    <span>View All Tools</span>
-                </a>
-            </div>
-            <!-- Quick Tool Links -->
-            <div class="mt-8 grid grid-cols-2 sm:grid-cols-3 gap-3 text-sm">
-                <a href="pdf-to-jpg.html" class="text-slate-600 hover:text-brand-600 transition-colors">PDF to JPG</a>
-                <a href="image-to-pdf.html" class="text-slate-600 hover:text-brand-600 transition-colors">Image to PDF</a>
-                <a href="merge-pdf.html" class="text-slate-600 hover:text-brand-600 transition-colors">Merge PDF</a>
-                <a href="split-pdf.html" class="text-slate-600 hover:text-brand-600 transition-colors">Split PDF</a>
-                <a href="pdf-to-text.html" class="text-slate-600 hover:text-brand-600 transition-colors">PDF to Text</a>
-                <a href="watermark-pdf.html" class="text-slate-600 hover:text-brand-600 transition-colors">Watermark PDF</a>
-            </div>
-        </div>
-    </main>
+    <!-- ============================================================ -->
+    <!-- PDF TOOLS - HIGH PRIORITY (0.9 - 1.0)                        -->
+    <!-- ============================================================ -->
 
-    <!-- Footer -->
-    <footer class="bg-white border-t border-slate-200 mt-12 py-6">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-xs text-slate-500">
-            <p>&copy; 2026 PDFImagera. Free Unlimited PDF Tools.</p>
-        </div>
-    </footer>
-</body>
-</html>
+    <!-- PDF to JPG (Most popular tool) -->
+    <url>
+        <loc>https://pdfimagera.com/pdf-to-jpg</loc>
+        <lastmod>2026-08-19</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>1.0</priority>
+        <image:image>
+            <image:loc>https://pdfimagera.com/images/pdf-to-jpg-preview.jpg</image:loc>
+            <image:title>Free PDF to JPG Converter</image:title>
+            <image:caption>Convert PDF pages to high-quality JPG images online for free</image:caption>
+        </image:image>
+    </url>
+
+    <!-- PDF to Image -->
+    <url>
+        <loc>https://pdfimagera.com/pdf-to-image</loc>
+        <lastmod>2026-08-19</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.9</priority>
+        <image:image>
+            <image:loc>https://pdfimagera.com/images/pdf-to-image-preview.jpg</image:loc>
+            <image:title>Free PDF to Image Converter</image:title>
+            <image:caption>Convert PDF pages to PNG, JPG, WebP, and BMP images</image:caption>
+        </image:image>
+    </url>
+
+    <!-- Image to PDF -->
+    <url>
+        <loc>https://pdfimagera.com/image-to-pdf</loc>
+        <lastmod>2026-08-19</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.9</priority>
+        <image:image>
+            <image:loc>https://pdfimagera.com/images/image-to-pdf-preview.jpg</image:loc>
+            <image:title>Free Image to PDF Converter</image:title>
+            <image:caption>Combine multiple images into a single PDF document</image:caption>
+        </image:image>
+    </url>
+
+    <!-- Text to PDF -->
+    <url>
+        <loc>https://pdfimagera.com/text-to-pdf</loc>
+        <lastmod>2026-08-19</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.9</priority>
+        <image:image>
+            <image:loc>https://pdfimagera.com/images/text-to-pdf-preview.jpg</image:loc>
+            <image:title>Free Text to PDF Converter</image:title>
+            <image:caption>Convert plain text to styled PDF with fonts and colors</image:caption>
+        </image:image>
+    </url>
+
+    <!-- Merge PDF -->
+    <url>
+        <loc>https://pdfimagera.com/merge-pdf</loc>
+        <lastmod>2026-08-19</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.9</priority>
+        <image:image>
+            <image:loc>https://pdfimagera.com/images/merge-pdf-preview.jpg</image:loc>
+            <image:title>Free Merge PDF Tool</image:title>
+            <image:caption>Combine multiple PDF files into a single document</image:caption>
+        </image:image>
+    </url>
+
+    <!-- Split PDF -->
+    <url>
+        <loc>https://pdfimagera.com/split-pdf</loc>
+        <lastmod>2026-08-19</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.9</priority>
+        <image:image>
+            <image:loc>https://pdfimagera.com/images/split-pdf-preview.jpg</image:loc>
+            <image:title>Free Split PDF Tool</image:title>
+            <image:caption>Extract specific pages or split every page from PDF</image:caption>
+        </image:image>
+    </url>
+
+    <!-- Organize PDF -->
+    <url>
+        <loc>https://pdfimagera.com/organize-pdf</loc>
+        <lastmod>2026-08-19</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.9</priority>
+        <image:image>
+            <image:loc>https://pdfimagera.com/images/organize-pdf-preview.jpg</image:loc>
+            <image:title>Free Organize PDF Tool</image:title>
+            <image:caption>Rotate, reorder, and remove pages from PDF documents</image:caption>
+        </image:image>
+    </url>
+
+    <!-- Watermark PDF -->
+    <url>
+        <loc>https://pdfimagera.com/watermark-pdf</loc>
+        <lastmod>2026-08-19</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.9</priority>
+        <image:image>
+            <image:loc>https://pdfimagera.com/images/watermark-pdf-preview.jpg</image:loc>
+            <image:title>Free Watermark PDF Tool</image:title>
+            <image:caption>Add custom text watermarks to all pages of your PDF</image:caption>
+        </image:image>
+    </url>
+
+    <!-- ============================================================ -->
+    <!-- CONVERSION TOOLS - MEDIUM PRIORITY (0.8)                      -->
+    <!-- ============================================================ -->
+
+    <!-- PDF to Text -->
+    <url>
+        <loc>https://pdfimagera.com/pdf-to-text</loc>
+        <lastmod>2026-08-19</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+        <image:image>
+            <image:loc>https://pdfimagera.com/images/pdf-to-text-preview.jpg</image:loc>
+            <image:title>Free PDF to Text Converter</image:title>
+            <image:caption>Extract clean text content from PDF documents</image:caption>
+        </image:image>
+    </url>
+
+    <!-- PPT to PDF -->
+    <url>
+        <loc>https://pdfimagera.com/ppt-to-pdf</loc>
+        <lastmod>2026-08-19</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+        <image:image>
+            <image:loc>https://pdfimagera.com/images/ppt-to-pdf-preview.jpg</image:loc>
+            <image:title>Free PPT to PDF Converter</image:title>
+            <image:caption>Convert PowerPoint presentations to PDF instantly</image:caption>
+        </image:image>
+    </url>
+
+    <!-- Excel to PDF -->
+    <url>
+        <loc>https://pdfimagera.com/excel-to-pdf</loc>
+        <lastmod>2026-08-19</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+        <image:image>
+            <image:loc>https://pdfimagera.com/images/excel-to-pdf-preview.jpg</image:loc>
+            <image:title>Free Excel to PDF Converter</image:title>
+            <image:caption>Convert Excel spreadsheets to PDF with formatting preserved</image:caption>
+        </image:image>
+    </url>
+
+    <!-- Web to PDF -->
+    <url>
+        <loc>https://pdfimagera.com/web-to-pdf</loc>
+        <lastmod>2026-08-19</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+        <image:image>
+            <image:loc>https://pdfimagera.com/images/web-to-pdf-preview.jpg</image:loc>
+            <image:title>Free Web to PDF Converter</image:title>
+            <image:caption>Save any webpage as a PDF document instantly</image:caption>
+        </image:image>
+    </url>
+
+    <!-- ============================================================ -->
+    <!-- IMAGE TOOLS - MEDIUM PRIORITY (0.8)                           -->
+    <!-- ============================================================ -->
+
+    <!-- Background Remover -->
+    <url>
+        <loc>https://pdfimagera.com/background-remover</loc>
+        <lastmod>2026-08-19</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+        <image:image>
+            <image:loc>https://pdfimagera.com/images/background-remover-preview.jpg</image:loc>
+            <image:title>Free Background Remover Tool</image:title>
+            <image:caption>AI-powered background removal with transparent PNG output</image:caption>
+        </image:image>
+    </url>
+
+    <!-- ============================================================ -->
+    <!-- LEGAL PAGES - LOW PRIORITY (0.3 - 0.4)                       -->
+    <!-- ============================================================ -->
+
+    <!-- Contact Page -->
+    <url>
+        <loc>https://pdfimagera.com/contact</loc>
+        <lastmod>2026-08-19</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.4</priority>
+    </url>
+
+    <!-- Privacy Policy -->
+    <url>
+        <loc>https://pdfimagera.com/privacy</loc>
+        <lastmod>2026-08-19</lastmod>
+        <changefreq>yearly</changefreq>
+        <priority>0.3</priority>
+    </url>
+
+    <!-- Terms of Service -->
+    <url>
+        <loc>https://pdfimagera.com/terms</loc>
+        <lastmod>2026-08-19</lastmod>
+        <changefreq>yearly</changefreq>
+        <priority>0.3</priority>
+    </url>
+
+</urlset>
