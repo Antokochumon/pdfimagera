@@ -1,0 +1,153 @@
+# .htaccess - Complete URL Rewriting for PDFImagera
+# Supports both clean URLs AND .html extensions
+
+RewriteEngine On
+RewriteBase /
+
+# ============================================
+# 1. FORCE HTTPS (SECURITY)
+# ============================================
+RewriteCond %{HTTPS} off
+RewriteRule ^(.*)$ https://%{HTTP_HOST}/$1 [R=301,L]
+
+# ============================================
+# 2. REMOVE TRAILING SLASH
+# ============================================
+RewriteRule ^(.+)/$ /$1 [R=301,L]
+
+# ============================================
+# 3. REMOVE .html EXTENSION (CLEAN URLs)
+# ============================================
+# If the request is not for a directory
+RewriteCond %{REQUEST_FILENAME} !-d
+# And the file with .html exists
+RewriteCond %{REQUEST_FILENAME}\.html -f
+# Rewrite to .html (internal)
+RewriteRule ^(.*)$ $1.html [L]
+
+# ============================================
+# 4. REDIRECT .html TO CLEAN URL (SEO)
+# ============================================
+# If someone visits with .html, redirect to clean URL
+RewriteCond %{THE_REQUEST} \s/([^.]+)\.html [NC]
+RewriteRule ^ /%1? [R=301,L]
+
+# ============================================
+# 5. DIRECT TOOL MAPPING (FALLBACK)
+# ============================================
+# Homepage
+RewriteRule ^$ index.html [L]
+
+# PDF Tools
+RewriteRule ^pdf-to-jpg$ pdf-to-jpg.html [L]
+RewriteRule ^pdf-to-image$ pdf-to-image.html [L]
+RewriteRule ^image-to-pdf$ image-to-pdf.html [L]
+RewriteRule ^text-to-pdf$ text-to-pdf.html [L]
+RewriteRule ^merge-pdf$ merge-pdf.html [L]
+RewriteRule ^split-pdf$ split-pdf.html [L]
+RewriteRule ^organize-pdf$ organize-pdf.html [L]
+RewriteRule ^watermark-pdf$ watermark-pdf.html [L]
+RewriteRule ^pdf-to-text$ pdf-to-text.html [L]
+
+# Conversion Tools
+RewriteRule ^ppt-to-pdf$ ppt-to-pdf.html [L]
+RewriteRule ^excel-to-pdf$ excel-to-pdf.html [L]
+RewriteRule ^web-to-pdf$ web-to-pdf.html [L]
+
+# Image Tools
+RewriteRule ^background-remover$ background-remover.html [L]
+
+# Legal Pages
+RewriteRule ^privacy$ privacy.html [L]
+RewriteRule ^terms$ terms.html [L]
+RewriteRule ^contact$ contact.html [L]
+
+# ============================================
+# 6. ERROR PAGES
+# ============================================
+ErrorDocument 404 /404.html
+ErrorDocument 500 /500.html
+
+# ============================================
+# 7. CACHING STATIC RESOURCES
+# ============================================
+<FilesMatch "\.(css|js|jpg|jpeg|png|gif|ico|svg|webp|woff|woff2|ttf|eot)$">
+    Header set Cache-Control "max-age=31536000, public, immutable"
+</FilesMatch>
+
+# HTML files - cache for 1 hour
+<FilesMatch "\.(html|htm)$">
+    Header set Cache-Control "max-age=3600, public"
+</FilesMatch>
+
+# ============================================
+# 8. COMPRESSION (GZIP)
+# ============================================
+AddOutputFilterByType DEFLATE text/html text/css text/javascript application/javascript application/json text/xml application/xml application/rss+xml text/plain
+
+# ============================================
+# 9. SECURITY HEADERS
+# ============================================
+<IfModule mod_headers.c>
+    # Prevent MIME type sniffing
+    Header set X-Content-Type-Options "nosniff"
+    
+    # Prevent clickjacking
+    Header set X-Frame-Options "SAMEORIGIN"
+    
+    # XSS Protection
+    Header set X-XSS-Protection "1; mode=block"
+    
+    # Referrer Policy
+    Header set Referrer-Policy "strict-origin-when-cross-origin"
+    
+    # Permissions Policy
+    Header set Permissions-Policy "geolocation=(), microphone=(), camera=()"
+</IfModule>
+
+# ============================================
+# 10. BLOCK BAD BOTS
+# ============================================
+# Block bad bots from accessing your site
+RewriteCond %{HTTP_USER_AGENT} (ahrefs|semrush|dotbot|majestic|barkrowler|mauibot|80legs|yandexbot) [NC]
+RewriteRule .* - [F,L]
+
+# ============================================
+# 11. PREVENT DIRECT ACCESS TO SENSITIVE FILES
+# ============================================
+<FilesMatch "^(\.htaccess|\.htpasswd|\.git|\.env|\.gitignore|composer\.json|composer\.lock|package\.json|package-lock\.json|web\.config)">
+    Order allow,deny
+    Deny from all
+</FilesMatch>
+
+# ============================================
+# 12. CORS HEADERS (for fonts, etc.)
+# ============================================
+<IfModule mod_headers.c>
+    <FilesMatch "\.(ttf|ttc|otf|eot|woff|woff2|font.css)$">
+        Header set Access-Control-Allow-Origin "*"
+    </FilesMatch>
+</IfModule>
+
+# ============================================
+# 13. SET DEFAULT CHARSET
+# ============================================
+AddDefaultCharset UTF-8
+
+# ============================================
+# 14. DISABLE DIRECTORY BROWSING
+# ============================================
+Options -Indexes
+
+# ============================================
+# 15. REDIRECT WWW TO NON-WWW (or vice versa)
+# ============================================
+# Redirect www to non-www
+RewriteCond %{HTTP_HOST} ^www\.pdfimagera\.com [NC]
+RewriteRule ^(.*)$ https://pdfimagera.com/$1 [R=301,L]
+
+# ============================================
+# 16. XML SITEMAP ACCESS
+# ============================================
+RewriteRule ^sitemap\.xml$ sitemap.xml [L]
+RewriteRule ^robots\.txt$ robots.txt [L]
