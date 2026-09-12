@@ -1,4 +1,3 @@
-<!-- background-remover.html - Remove Image Background Online Free -->
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
 <head>
@@ -36,6 +35,7 @@
     }
     </script>
 
+    <!-- Tailwind & Core Libraries -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -54,29 +54,47 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
+    <!-- TensorFlow.js and Body-Segmentation for AI functionality -->
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@4.10.0/dist/tf.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/body-segmentation@1.0.1/dist/body-segmentation.min.js" crossorigin="anonymous"></script>
+
     <style>
         body { font-family: 'Inter', sans-serif; }
         .gradient-bg { background: linear-gradient(135deg, #fce7f3 0%, #fbcfe8 50%, #fce7f3 100%); }
-        .tool-container { max-width: 950px; margin: 0 auto; }
+        .tool-container { max-width: 1100px; margin: 0 auto; }
         .drop-zone { border: 2px dashed #cbd5e1; transition: all 0.3s; min-height: 200px; }
-        .drop-zone:hover, .drop-zone.drag-over { border-color: #22c55e; background: #f0fdf4; }
+        .drop-zone:hover, .drop-zone.drag-over { border-color: #ec4899; background: #fdf2f8; }
         .badge-free { background: #dcfce7; color: #15803d; font-size: 10px; font-weight: 700; padding: 2px 12px; border-radius: 20px; }
-        .badge-unlimited { background: #fef3c7; color: #92400e; font-size: 10px; font-weight: 700; padding: 2px 12px; border-radius: 20px; }
-        .badge-privacy { background: #dbeafe; color: #1e40af; font-size: 10px; font-weight: 700; padding: 2px 12px; border-radius: 20px; }
         .step-circle { width: 32px; height: 32px; border-radius: 50%; background: #ec4899; color: white; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 14px; flex-shrink: 0; }
+        
         .checkerboard {
-            background-image: linear-gradient(45deg, #e2e8f0 25%, transparent 25%), 
-                              linear-gradient(-45deg, #e2e8f0 25%, transparent 25%), 
-                              linear-gradient(45deg, transparent 75%, #e2e8f0 75%), 
-                              linear-gradient(-45deg, transparent 75%, #e2e8f0 75%);
+            background-color: #f1f5f9;
+            background-image: 
+                linear-gradient(45deg, #cbd5e1 25%, transparent 25%), 
+                linear-gradient(-45deg, #cbd5e1 25%, transparent 25%), 
+                linear-gradient(45deg, transparent 75%, #cbd5e1 75%), 
+                linear-gradient(-45deg, transparent 75%, #cbd5e1 75%);
             background-size: 20px 20px;
             background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
         }
+        
         .result-container { min-height: 300px; display: flex; align-items: center; justify-content: center; }
         .result-container img { max-height: 300px; max-width: 100%; object-fit: contain; }
+        .result-container canvas { max-height: 300px; max-width: 100%; object-fit: contain; }
+        
+        /* Touch-up brush cursor */
+        .brush-active { cursor: crosshair; }
+        .brush-erase { cursor: cell; }
+        .brush-keep { cursor: copy; }
+        
         @media (max-width: 640px) {
             .result-container { min-height: 200px; }
             .result-container img { max-height: 200px; }
+            .result-container canvas { max-height: 200px; }
+        }
+        
+        .toast-msg {
+            transition: all 0.3s ease;
         }
     </style>
 </head>
@@ -160,6 +178,7 @@
                         </button>
                     </div>
 
+                    <!-- Progress -->
                     <div id="progress" class="hidden">
                         <div class="flex justify-between text-xs font-semibold text-slate-600 mb-1">
                             <span id="progressText">Processing image...</span>
@@ -170,8 +189,75 @@
                         </div>
                     </div>
 
-                    <!-- Result -->
+                    <!-- Result & Fine-Tuning -->
                     <div id="result" class="hidden">
+                        
+                        <!-- Fine-Tuning Controls (from 2nd code) -->
+                        <div class="bg-slate-50 rounded-xl p-4 border border-slate-200 mb-4">
+                            <div class="flex flex-wrap items-center justify-between gap-3 border-b border-slate-200 pb-3 mb-3">
+                                <span class="text-xs font-bold uppercase tracking-wider text-pink-600 flex items-center gap-1.5">
+                                    <i class="fa-solid fa-sliders"></i> Cutout Fine-Tuning
+                                </span>
+                                <div class="flex items-center gap-2">
+                                    <button onclick="invertMask()" class="text-xs bg-white hover:bg-slate-100 text-pink-600 border border-slate-200 px-3 py-1.5 rounded-lg transition-all font-semibold flex items-center gap-1.5 shadow-sm">
+                                        <i class="fa-solid fa-right-left"></i> Invert
+                                    </button>
+                                    <button onclick="processBackground()" class="text-xs bg-pink-600 hover:bg-pink-700 text-white px-4 py-1.5 rounded-lg transition-all font-semibold shadow-md flex items-center gap-1.5">
+                                        <i class="fa-solid fa-rotate-right"></i> Re-Process
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
+                                <!-- Sensitivity Control -->
+                                <div>
+                                    <div class="flex justify-between mb-1">
+                                        <label for="toleranceSlider" class="font-medium text-slate-600">Background Tolerance</label>
+                                        <span id="toleranceValue" class="text-pink-600 font-mono">35%</span>
+                                    </div>
+                                    <input type="range" id="toleranceSlider" min="5" max="80" value="35" class="w-full accent-pink-500 cursor-pointer" oninput="updateControls()">
+                                </div>
+
+                                <!-- Edge Smoothness Control -->
+                                <div>
+                                    <div class="flex justify-between mb-1">
+                                        <label for="smoothnessSlider" class="font-medium text-slate-600">Edge Smoothness</label>
+                                        <span id="smoothnessValue" class="text-pink-600 font-mono">2px</span>
+                                    </div>
+                                    <input type="range" id="smoothnessSlider" min="0" max="8" value="2" class="w-full accent-pink-500 cursor-pointer" oninput="updateControls()">
+                                </div>
+
+                                <!-- Mode Select -->
+                                <div>
+                                    <label for="modeSelect" class="block font-medium text-slate-600 mb-1">Detection Profile</label>
+                                    <select id="modeSelect" class="w-full bg-white border border-slate-300 rounded-lg p-1.5 text-xs text-slate-800 focus:outline-none focus:border-pink-500" onchange="processBackground()">
+                                        <option value="ai" selected>🤖 AI Portrait & Person Guard</option>
+                                        <option value="smart">Corner-Sampled Smart Engine</option>
+                                        <option value="chroma">Chroma Key (Green/White Screen)</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <!-- Touch-up Brush Toolbar -->
+                            <div class="flex flex-wrap items-center justify-between gap-3 pt-3 border-t border-slate-200 mt-3">
+                                <div class="flex items-center gap-2">
+                                    <span class="text-xs text-slate-500 font-medium">Manual Touch-up:</span>
+                                    <button id="btnBrushOff" onclick="setBrush('off')" class="text-xs px-2.5 py-1 rounded bg-pink-600 text-white font-medium shadow-sm">Off</button>
+                                    <button id="btnBrushErase" onclick="setBrush('erase')" class="text-xs px-2.5 py-1 rounded bg-white hover:bg-slate-100 text-slate-600 font-medium border border-slate-200 shadow-sm">
+                                        <i class="fa-solid fa-eraser text-red-500 mr-1"></i> Erase
+                                    </button>
+                                    <button id="btnBrushKeep" onclick="setBrush('keep')" class="text-xs px-2.5 py-1 rounded bg-white hover:bg-slate-100 text-slate-600 font-medium border border-slate-200 shadow-sm">
+                                        <i class="fa-solid fa-paintbrush text-emerald-500 mr-1"></i> Restore
+                                    </button>
+                                </div>
+                                <div class="flex items-center gap-2">
+                                    <span class="text-xs text-slate-500">Brush Size:</span>
+                                    <input type="range" id="brushSizeSlider" min="5" max="60" value="25" class="w-24 accent-pink-500 cursor-pointer">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Preview Grid -->
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <!-- Original -->
                             <div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
@@ -184,7 +270,7 @@
                             <div class="checkerboard p-4 rounded-xl border border-slate-200">
                                 <p class="text-xs font-bold text-emerald-700 uppercase tracking-wider text-center mb-2">Background Removed</p>
                                 <div class="result-container">
-                                    <img id="resultImage" class="rounded shadow-md" alt="Background removed">
+                                    <canvas id="resultCanvas" class="rounded shadow-md brush-active" alt="Background removed"></canvas>
                                 </div>
                             </div>
                         </div>
@@ -313,164 +399,31 @@
         </div>
     </footer>
 
+    <!-- ==================== JAVASCRIPT: FULLY FUNCTIONAL ENGINE ==================== -->
     <script>
-        let bgState = { file: null, resultDataUrl: null };
+        // ========== STATE ==========
+        let bgState = {
+            file: null,
+            loadedImg: null,
+            originalData: null,
+            maskData: null,
+            manualMask: null,
+            brushTool: 'off',
+            isDrawing: false,
+            resultDataUrl: null
+        };
         let isProcessing = false;
+        let aiSegmenter = null;
 
-        function handleFileSelect(e) {
-            const file = e.target.files[0];
-            if (!file || !file.type.startsWith('image/')) {
-                showToast('Please select a valid image file.', 'error');
-                return;
-            }
-            bgState.file = file;
-            bgState.resultDataUrl = null;
-            document.getElementById('controls').classList.remove('hidden');
-            document.getElementById('result').classList.add('hidden');
-            document.getElementById('fileName').textContent = file.name;
-            document.getElementById('fileSize').textContent = (file.size / 1024 / 1024).toFixed(2) + ' MB';
-            document.querySelector('.drop-zone h3').textContent = `🖼️ ${file.name}`;
-            document.querySelector('.drop-zone p').textContent = 'Click to change image';
-
-            // Show original
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                document.getElementById('originalImage').src = e.target.result;
-            };
-            reader.readAsDataURL(file);
-
-            processBackground();
-        }
-
-        function removeFile() {
-            bgState.file = null;
-            bgState.resultDataUrl = null;
-            document.getElementById('controls').classList.add('hidden');
-            document.getElementById('result').classList.add('hidden');
-            document.querySelector('.drop-zone h3').textContent = 'Drop your image here or click to browse';
-            document.querySelector('.drop-zone p').textContent = 'AI-powered background removal in seconds';
-            document.getElementById('fileInput').value = '';
-            showToast('File removed', 'info');
-        }
-
-        async function processBackground() {
-            if (!bgState.file || isProcessing) return;
-            isProcessing = true;
-
-            const progressDiv = document.getElementById('progress');
-            const progressBar = document.getElementById('progressBar');
-            const progressText = document.getElementById('progressText');
-            const progressPercent = document.getElementById('progressPercent');
-
-            progressDiv.classList.remove('hidden');
-            document.getElementById('result').classList.add('hidden');
-            showToast('Removing background with AI...', 'info');
-
-            try {
-                // Simulate AI processing with a canvas-based approach
-                // In production, you would use a real AI model like @imgly/background-removal
-                const img = new Image();
-                const dataUrl = await readFileAsDataURL(bgState.file);
-                img.src = dataUrl;
-                await new Promise((resolve) => { img.onload = resolve; });
-
-                // Create canvas for processing
-                const canvas = document.createElement('canvas');
-                canvas.width = img.width;
-                canvas.height = img.height;
-                const ctx = canvas.getContext('2d');
-                ctx.drawImage(img, 0, 0);
-
-                // Get image data
-                const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-                const data = imageData.data;
-
-                // Simple background removal using edge detection
-                // This is a placeholder - in production, use a real AI model
-                // For demo, we'll make a simple gradient background transparent
-                const isEdge = (x, y) => {
-                    if (x === 0 || y === 0 || x === canvas.width - 1 || y === canvas.height - 1) return true;
-                    const idx = (y * canvas.width + x) * 4;
-                    const leftIdx = (y * canvas.width + (x - 1)) * 4;
-                    const rightIdx = (y * canvas.width + (x + 1)) * 4;
-                    const topIdx = ((y - 1) * canvas.width + x) * 4;
-                    const bottomIdx = ((y + 1) * canvas.width + x) * 4;
-                    
-                    const r = data[idx], g = data[idx + 1], b = data[idx + 2];
-                    const diff = (r - data[leftIdx]) ** 2 + (g - data[leftIdx + 1]) ** 2 + (b - data[leftIdx + 2]) ** 2 +
-                                 (r - data[rightIdx]) ** 2 + (g - data[rightIdx + 1]) ** 2 + (b - data[rightIdx + 2]) ** 2 +
-                                 (r - data[topIdx]) ** 2 + (g - data[topIdx + 1]) ** 2 + (b - data[topIdx + 2]) ** 2 +
-                                 (r - data[bottomIdx]) ** 2 + (g - data[bottomIdx + 1]) ** 2 + (b - data[bottomIdx + 2]) ** 2;
-                    return diff < 500;
-                };
-
-                // Simple background detection - make corners transparent
-                for (let y = 0; y < canvas.height; y++) {
-                    for (let x = 0; x < canvas.width; x++) {
-                        const idx = (y * canvas.width + x) * 4;
-                        // Check if pixel is near edge or in corners
-                        if (x < 10 || x > canvas.width - 10 || y < 10 || y > canvas.height - 10) {
-                            data[idx + 3] = 0; // Make transparent
-                        } else {
-                            // For demo, keep center pixels
-                            const distFromCenter = Math.sqrt((x - canvas.width/2) ** 2 + (y - canvas.height/2) ** 2);
-                            if (distFromCenter > Math.min(canvas.width, canvas.height) * 0.35) {
-                                // Gradually make transparent
-                                const alpha = Math.max(0, 1 - (distFromCenter - Math.min(canvas.width, canvas.height) * 0.35) / (Math.min(canvas.width, canvas.height) * 0.3));
-                                data[idx + 3] = Math.round(alpha * 255);
-                            }
-                        }
-                    }
-                    // Update progress
-                    const percent = Math.round((y / canvas.height) * 100);
-                    progressBar.style.width = percent + '%';
-                    progressPercent.textContent = percent + '%';
-                    progressText.textContent = `Processing... ${percent}%`;
-                }
-
-                ctx.putImageData(imageData, 0, 0);
-                bgState.resultDataUrl = canvas.toDataURL('image/png');
-
-                document.getElementById('resultImage').src = bgState.resultDataUrl;
-                document.getElementById('result').classList.remove('hidden');
-                progressDiv.classList.add('hidden');
-                showToast('Background removed successfully!', 'success');
-            } catch (err) {
-                console.error(err);
-                showToast('Failed to remove background. Please try again.', 'error');
-                progressDiv.classList.add('hidden');
-            } finally {
-                isProcessing = false;
-            }
-        }
-
-        function readFileAsDataURL(file) {
-            return new Promise((resolve, reject) => {
-                const reader = new FileReader();
-                reader.onload = () => resolve(reader.result);
-                reader.onerror = reject;
-                reader.readAsDataURL(file);
-            });
-        }
-
-        function downloadResult() {
-            if (!bgState.resultDataUrl) {
-                showToast('No result to download. Please process the image first.', 'error');
-                return;
-            }
-            const link = document.createElement('a');
-            link.href = bgState.resultDataUrl;
-            const name = bgState.file.name.substring(0, bgState.file.name.lastIndexOf('.')) || 'image';
-            link.download = `${name}_no_bg.png`;
-            link.click();
-            showToast('Transparent PNG downloaded!', 'success');
-        }
-
-        function showToast(msg, type) {
+        // ========== TOAST ==========
+        function showToast(msg, type = 'info') {
             const existing = document.querySelector('.toast-msg');
             if (existing) existing.remove();
             const div = document.createElement('div');
-            div.className = `toast-msg fixed bottom-5 right-5 z-50 px-4 py-3 rounded-xl shadow-xl text-xs font-semibold text-white transition-all transform translate-y-2 opacity-0 max-w-sm ${type === 'success' ? 'bg-emerald-600' : type === 'error' ? 'bg-rose-600' : 'bg-slate-900'}`;
+            div.className = `toast-msg fixed bottom-5 right-5 z-50 px-4 py-3 rounded-xl shadow-xl text-xs font-semibold text-white transition-all transform translate-y-2 opacity-0 max-w-sm ${
+                type === 'success' ? 'bg-emerald-600' : 
+                type === 'error' ? 'bg-rose-600' : 'bg-slate-900'
+            }`;
             div.textContent = msg;
             document.body.appendChild(div);
             setTimeout(() => div.classList.remove('translate-y-2', 'opacity-0'), 10);
@@ -480,6 +433,400 @@
             }, 3500);
         }
 
+        // ========== FILE HANDLING ==========
+        function handleFileSelect(e) {
+            const file = e.target.files[0];
+            if (!file || !file.type.startsWith('image/')) {
+                showToast('Please select a valid image file.', 'error');
+                return;
+            }
+            processImageFile(file);
+        }
+
+        function processImageFile(file) {
+            bgState.file = file;
+            bgState.resultDataUrl = null;
+            
+            document.getElementById('controls').classList.remove('hidden');
+            document.getElementById('result').classList.add('hidden');
+            document.getElementById('fileName').textContent = file.name;
+            document.getElementById('fileSize').textContent = (file.size / 1024 / 1024).toFixed(2) + ' MB';
+            document.querySelector('.drop-zone h3').textContent = `🖼️ ${file.name}`;
+            document.querySelector('.drop-zone p').textContent = 'Click to change image';
+
+            const reader = new FileReader();
+            reader.onload = function(evt) {
+                const img = new Image();
+                img.onload = function() {
+                    bgState.loadedImg = img;
+                    document.getElementById('originalImage').src = evt.target.result;
+                    processBackground();
+                };
+                img.src = evt.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function removeFile() {
+            bgState.file = null;
+            bgState.loadedImg = null;
+            bgState.originalData = null;
+            bgState.maskData = null;
+            bgState.manualMask = null;
+            bgState.resultDataUrl = null;
+            document.getElementById('controls').classList.add('hidden');
+            document.getElementById('result').classList.add('hidden');
+            document.getElementById('progress').classList.add('hidden');
+            document.querySelector('.drop-zone h3').textContent = 'Drop your image here or click to browse';
+            document.querySelector('.drop-zone p').textContent = 'AI-powered background removal in seconds';
+            document.getElementById('fileInput').value = '';
+            showToast('File removed', 'info');
+        }
+
+        // ========== AI SEGMENTER ==========
+        async function loadAISegmenter() {
+            if (aiSegmenter) return aiSegmenter;
+            try {
+                if (typeof tf !== 'undefined' && typeof bodySegmentation !== 'undefined') {
+                    await tf.ready();
+                    const model = bodySegmentation.SupportedModels.MediaPipeSelfieSegmentation;
+                    const config = { runtime: 'tfjs', modelType: 'general' };
+                    aiSegmenter = await bodySegmentation.createSegmenter(model, config);
+                    return aiSegmenter;
+                }
+            } catch (e) {
+                console.warn('AI neural segmenter fallback triggered:', e);
+            }
+            return null;
+        }
+
+        // ========== CONTROLS ==========
+        function updateControls() {
+            document.getElementById('toleranceValue').textContent = document.getElementById('toleranceSlider').value + '%';
+            document.getElementById('smoothnessValue').textContent = document.getElementById('smoothnessSlider').value + 'px';
+            if (bgState.originalData && bgState.maskData) {
+                renderMaskToCanvas();
+            }
+        }
+
+        function invertMask() {
+            if (!bgState.maskData) return;
+            for (let i = 0; i < bgState.maskData.length; i++) {
+                bgState.maskData[i] = 255 - bgState.maskData[i];
+            }
+            renderMaskToCanvas();
+            showToast('Selection inverted!', 'info');
+        }
+
+        // ========== PROCESSING ENGINE ==========
+        async function processBackground() {
+            if (!bgState.loadedImg || isProcessing) return;
+            isProcessing = true;
+
+            const progressDiv = document.getElementById('progress');
+            const progressBar = document.getElementById('progressBar');
+            const progressText = document.getElementById('progressText');
+            const progressPercent = document.getElementById('progressPercent');
+
+            progressDiv.classList.remove('hidden');
+            document.getElementById('result').classList.add('hidden');
+            showToast('Analyzing image and subject boundary...', 'info');
+
+            await new Promise(r => setTimeout(r, 40));
+
+            try {
+                const img = bgState.loadedImg;
+                const width = img.width;
+                const height = img.height;
+
+                const canvas = document.createElement('canvas');
+                canvas.width = width;
+                canvas.height = height;
+                const ctx = canvas.getContext('2d');
+                ctx.drawImage(img, 0, 0);
+
+                const imageData = ctx.getImageData(0, 0, width, height);
+                const data = imageData.data;
+                bgState.originalData = imageData;
+
+                const totalPixels = width * height;
+                bgState.maskData = new Uint8Array(totalPixels);
+                bgState.manualMask = new Uint8Array(totalPixels);
+
+                const mode = document.getElementById('modeSelect').value;
+
+                // ----- MODE 1: AI MODEL -----
+                if (mode === 'ai') {
+                    progressText.textContent = 'Initializing AI portrait segmentation...';
+                    progressBar.style.width = '40%';
+                    progressPercent.textContent = '40%';
+                    await new Promise(r => setTimeout(r, 30));
+
+                    const segmenter = await loadAISegmenter();
+                    if (segmenter) {
+                        try {
+                            const people = await segmenter.segmentPeople(canvas);
+                            if (people && people.length > 0) {
+                                const maskImage = await people[0].mask.toImageData();
+                                const maskData = maskImage.data;
+
+                                for (let i = 0; i < totalPixels; i++) {
+                                    const isPerson = maskData[i * 4 + 3] > 100 || maskData[i * 4] > 100;
+                                    bgState.maskData[i] = isPerson ? 255 : 0;
+                                }
+
+                                progressBar.style.width = '100%';
+                                progressPercent.textContent = '100%';
+                                renderMaskToCanvas();
+                                finishProcessing();
+                                return;
+                            }
+                        } catch (aiErr) {
+                            console.warn('AI segment execution fell back to smart engine:', aiErr);
+                        }
+                    }
+                    // If AI fails or no people, fall through to smart engine
+                }
+
+                // ----- MODE 2: CORNER-SAMPLED SMART ENGINE -----
+                progressText.textContent = 'Sampling top and side background palettes...';
+                progressBar.style.width = '50%';
+                progressPercent.textContent = '50%';
+
+                const bgPalette = [];
+                const sampleStep = Math.max(1, Math.floor(Math.min(width, height) / 80));
+
+                function addSample(x, y) {
+                    const idx = (y * width + x) * 4;
+                    bgPalette.push({ r: data[idx], g: data[idx + 1], b: data[idx + 2] });
+                }
+
+                // Sample only top & upper sides (protect bottom clothing)
+                for (let x = 0; x < width; x += sampleStep) {
+                    addSample(x, 0);
+                    if (height > 20) addSample(x, Math.floor(height * 0.05));
+                }
+                for (let y = 0; y < Math.floor(height * 0.35); y += sampleStep) {
+                    addSample(0, y);
+                    addSample(width - 1, y);
+                }
+
+                const tolerance = parseInt(document.getElementById('toleranceSlider').value, 10);
+                const maxDistSq = (tolerance * 3.6) ** 2;
+
+                const visited = new Uint8Array(totalPixels);
+                const queue = [];
+
+                // Seed from top and upper sides
+                for (let x = 0; x < width; x++) {
+                    const idxTop = 0 * width + x;
+                    queue.push(idxTop);
+                    visited[idxTop] = 1;
+                }
+                for (let y = 0; y < Math.floor(height * 0.35); y++) {
+                    const idxLeft = y * width + 0;
+                    const idxRight = y * width + (width - 1);
+                    queue.push(idxLeft);
+                    queue.push(idxRight);
+                    visited[idxLeft] = 1;
+                    visited[idxRight] = 1;
+                }
+
+                function isBgColor(r, g, b) {
+                    if (mode === 'chroma') {
+                        const isGreen = g > 100 && g > r * 1.25 && g > b * 1.25;
+                        const isWhite = r > 230 && g > 230 && b > 230;
+                        return isGreen || isWhite;
+                    }
+                    let minDistanceSq = Infinity;
+                    for (let i = 0; i < bgPalette.length; i++) {
+                        const p = bgPalette[i];
+                        const dr = r - p.r;
+                        const dg = g - p.g;
+                        const db = b - p.b;
+                        const distSq = dr * dr + dg * dg + db * db;
+                        if (distSq < minDistanceSq) minDistanceSq = distSq;
+                    }
+                    return minDistanceSq <= maxDistSq;
+                }
+
+                let head = 0;
+                while (head < queue.length) {
+                    const curr = queue[head++];
+                    const px = curr % width;
+                    const py = Math.floor(curr / width);
+                    const dataIdx = curr * 4;
+
+                    const r = data[dataIdx];
+                    const g = data[dataIdx + 1];
+                    const b = data[dataIdx + 2];
+
+                    if (isBgColor(r, g, b)) {
+                        bgState.maskData[curr] = 0;
+                        if (px > 0 && !visited[curr - 1]) { visited[curr - 1] = 1; queue.push(curr - 1); }
+                        if (px < width - 1 && !visited[curr + 1]) { visited[curr + 1] = 1; queue.push(curr + 1); }
+                        if (py > 0 && !visited[curr - width]) { visited[curr - width] = 1; queue.push(curr - width); }
+                        if (py < height - 1 && !visited[curr + width]) { visited[curr + width] = 1; queue.push(curr + width); }
+                    } else {
+                        bgState.maskData[curr] = 255;
+                    }
+                }
+
+                // Preserve unreachable inner regions
+                for (let i = 0; i < totalPixels; i++) {
+                    if (!visited[i]) {
+                        bgState.maskData[i] = 255;
+                    }
+                }
+
+                progressBar.style.width = '100%';
+                progressPercent.textContent = '100%';
+                renderMaskToCanvas();
+                finishProcessing();
+
+            } catch (err) {
+                console.error(err);
+                showToast('Processing error. Please try again.', 'error');
+                progressDiv.classList.add('hidden');
+            } finally {
+                isProcessing = false;
+            }
+        }
+
+        function finishProcessing() {
+            document.getElementById('result').classList.remove('hidden');
+            document.getElementById('progress').classList.add('hidden');
+            showToast('Background removed successfully!', 'success');
+            setupCanvasTouchup();
+        }
+
+        // ========== RENDER MASK TO CANVAS ==========
+        function renderMaskToCanvas() {
+            if (!bgState.originalData || !bgState.maskData) return;
+
+            const width = bgState.originalData.width;
+            const height = bgState.originalData.height;
+            const canvas = document.getElementById('resultCanvas');
+            canvas.width = width;
+            canvas.height = height;
+
+            const ctx = canvas.getContext('2d');
+            const outputImageData = ctx.createImageData(width, height);
+            const orig = bgState.originalData.data;
+            const out = outputImageData.data;
+            const mask = bgState.maskData;
+            const manual = bgState.manualMask;
+
+            const smoothness = parseInt(document.getElementById('smoothnessSlider').value, 10);
+
+            for (let i = 0; i < mask.length; i++) {
+                const idx = i * 4;
+                out[idx] = orig[idx];
+                out[idx + 1] = orig[idx + 1];
+                out[idx + 2] = orig[idx + 2];
+
+                let opacity = mask[i];
+
+                if (manual[i] === 1) opacity = 0;
+                else if (manual[i] === 2) opacity = 255;
+
+                out[idx + 3] = opacity;
+            }
+
+            ctx.putImageData(outputImageData, 0, 0);
+
+            if (smoothness > 0) {
+                ctx.globalCompositeOperation = 'destination-in';
+                ctx.filter = `blur(${smoothness}px)`;
+                ctx.drawImage(canvas, 0, 0);
+                ctx.filter = 'none';
+                ctx.globalCompositeOperation = 'source-over';
+            }
+        }
+
+        // ========== MANUAL TOUCH-UP BRUSH ==========
+        function setBrush(mode) {
+            bgState.brushTool = mode;
+            const btnOff = document.getElementById('btnBrushOff');
+            const btnErase = document.getElementById('btnBrushErase');
+            const btnKeep = document.getElementById('btnBrushKeep');
+            const canvas = document.getElementById('resultCanvas');
+
+            // Reset classes
+            btnOff.className = 'text-xs px-2.5 py-1 rounded bg-white hover:bg-slate-100 text-slate-600 font-medium border border-slate-200 shadow-sm';
+            btnErase.className = 'text-xs px-2.5 py-1 rounded bg-white hover:bg-slate-100 text-slate-600 font-medium border border-slate-200 shadow-sm';
+            btnKeep.className = 'text-xs px-2.5 py-1 rounded bg-white hover:bg-slate-100 text-slate-600 font-medium border border-slate-200 shadow-sm';
+
+            // Reset canvas cursor
+            canvas.classList.remove('brush-active', 'brush-erase', 'brush-keep');
+
+            if (mode === 'off') {
+                btnOff.className = 'text-xs px-2.5 py-1 rounded bg-pink-600 text-white font-medium shadow-sm';
+                canvas.classList.add('brush-active');
+            } else if (mode === 'erase') {
+                btnErase.className = 'text-xs px-2.5 py-1 rounded bg-red-600 text-white font-medium shadow-sm';
+                canvas.classList.add('brush-erase');
+            } else if (mode === 'keep') {
+                btnKeep.className = 'text-xs px-2.5 py-1 rounded bg-emerald-600 text-white font-medium shadow-sm';
+                canvas.classList.add('brush-keep');
+            }
+        }
+
+        function setupCanvasTouchup() {
+            const canvas = document.getElementById('resultCanvas');
+
+            function applyBrush(e) {
+                if (!bgState.isDrawing || bgState.brushTool === 'off') return;
+                const rect = canvas.getBoundingClientRect();
+                const scaleX = canvas.width / rect.width;
+                const scaleY = canvas.height / rect.height;
+
+                const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+                const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+
+                const x = Math.floor((clientX - rect.left) * scaleX);
+                const y = Math.floor((clientY - rect.top) * scaleY);
+                const radius = parseInt(document.getElementById('brushSizeSlider').value, 10);
+                const val = bgState.brushTool === 'erase' ? 1 : 2;
+
+                for (let dy = -radius; dy <= radius; dy++) {
+                    for (let dx = -radius; dx <= radius; dx++) {
+                        if (dx * dx + dy * dy <= radius * radius) {
+                            const px = x + dx;
+                            const py = y + dy;
+                            if (px >= 0 && px < canvas.width && py >= 0 && py < canvas.height) {
+                                bgState.manualMask[py * canvas.width + px] = val;
+                            }
+                        }
+                    }
+                }
+                renderMaskToCanvas();
+            }
+
+            canvas.onmousedown = (e) => { bgState.isDrawing = true; applyBrush(e); };
+            canvas.onmousemove = applyBrush;
+            canvas.onmouseup = () => bgState.isDrawing = false;
+            canvas.ontouchstart = (e) => { e.preventDefault(); bgState.isDrawing = true; applyBrush(e); };
+            canvas.ontouchmove = (e) => { e.preventDefault(); applyBrush(e); };
+            canvas.ontouchend = () => bgState.isDrawing = false;
+        }
+
+        // ========== DOWNLOAD ==========
+        function downloadResult() {
+            const canvas = document.getElementById('resultCanvas');
+            if (!canvas || !bgState.originalData) {
+                showToast('No result to download. Please process an image first.', 'error');
+                return;
+            }
+            const link = document.createElement('a');
+            const name = bgState.file ? bgState.file.name.substring(0, bgState.file.name.lastIndexOf('.')) || 'image' : 'image';
+            link.download = `${name}_no_bg.png`;
+            link.href = canvas.toDataURL('image/png');
+            link.click();
+            showToast('Transparent PNG downloaded!', 'success');
+        }
+
+        // ========== DRAG & DROP ==========
         const dropzone = document.getElementById('dropzone');
         ['dragenter', 'dragover'].forEach(eventName => {
             dropzone.addEventListener(eventName, e => { e.preventDefault(); dropzone.classList.add('drag-over'); });
@@ -495,6 +842,9 @@
                 handleFileSelect({ target: { files: files } });
             }
         });
+
+        // ========== INITIAL BRUSH STATE ==========
+        setBrush('off');
     </script>
 </body>
 </html>
