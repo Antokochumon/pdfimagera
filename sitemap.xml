@@ -29,22 +29,11 @@
     <!-- PDF TOOLS - HIGH PRIORITY (0.9 - 1.0)                        -->
     <!-- ============================================================ -->
 
-    <!-- PDF to JPG (Most popular tool) -->
-    <url>
-        <loc>https://pdfimagera.com/pdf-to-jpg</loc>
-        <lastmod>2026-08-19</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>1.0</priority>
-        <image:image>
-            <image:loc>https://pdfimagera.com/images/pdf-to-jpg-preview.jpg</image:loc>
-            <image:title>Free PDF to JPG Converter</image:title>
-            <image:caption>Convert PDF pages to high-quality JPG images online for free</image:caption>
-        </image:image>
-    </url>
+
 
     <!-- PDF to Image -->
     <url>
-        <loc>https://pdfimagera.com/pdf-to-image</loc>
+        <loc>https://pdfimagera.com/pdf-to-image.html</loc>
         <lastmod>2026-08-19</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.9</priority>
