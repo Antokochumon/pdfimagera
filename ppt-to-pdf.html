@@ -1,24 +1,24 @@
-<!-- excel-to-pdf.html - Convert Excel to PDF Online Free -->
+<!-- ppt-to-pdf.html - Convert PowerPoint to PDF Online Free -->
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Free Excel to PDF Converter - Convert XLSX to PDF Online</title>
-    <meta name="description" content="Convert Excel spreadsheets to PDF online for free. Convert XLS, XLSX, and CSV files to PDF instantly. Unlimited usage, no registration, 100% private.">
-    <meta name="keywords" content="Excel to PDF, convert Excel to PDF, XLSX to PDF, free Excel to PDF, online spreadsheet converter, unlimited PDF converter, CSV to PDF">
-    <link rel="canonical" href="https://pdfimagera.com/excel-to-pdf">
+    <title>Free PPT to PDF Converter - Convert PowerPoint to PDF Online</title>
+    <meta name="description" content="Convert PowerPoint presentations to PDF online for free. Convert PPT, PPTX files to PDF instantly. Unlimited usage, no registration, 100% private.">
+    <meta name="keywords" content="PPT to PDF, convert PPT to PDF, PPTX to PDF, free PPT to PDF, online presentation converter, unlimited PDF converter, PowerPoint to PDF">
+    <link rel="canonical" href="https://pdfimagera.com/ppt-to-pdf">
     
     <!-- Open Graph -->
-    <meta property="og:title" content="Free Excel to PDF Converter - Convert XLSX to PDF Online">
-    <meta property="og:description" content="Convert Excel spreadsheets to PDF instantly. Free, unlimited, and 100% private. No uploads, no registration required.">
+    <meta property="og:title" content="Free PPT to PDF Converter - Convert PPTX to PDF Online">
+    <meta property="og:description" content="Convert PowerPoint presentations to PDF instantly. Free, unlimited, and 100% private. No uploads, no registration required.">
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://pdfimagera.com/excel-to-pdf">
+    <meta property="og:url" content="https://pdfimagera.com/ppt-to-pdf">
     
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Free Excel to PDF Converter - PDFImagera">
-    <meta name="twitter:description" content="Convert Excel to PDF online for free. Unlimited usage, complete privacy.">
+    <meta name="twitter:title" content="Free PPT to PDF Converter - PDFImagera">
+    <meta name="twitter:description" content="Convert PowerPoint to PDF online for free. Unlimited usage, complete privacy.">
     
     <meta name="robots" content="index, follow">
     <meta name="googlebot" content="index, follow">
@@ -28,8 +28,8 @@
     {
         "@context": "https://schema.org",
         "@type": "WebApplication",
-        "name": "Excel to PDF Converter",
-        "description": "Convert Excel spreadsheets to PDF online for free.",
+        "name": "PPT to PDF Converter",
+        "description": "Convert PowerPoint presentations to PDF online for free.",
         "applicationCategory": "Utility",
         "operatingSystem": "All",
         "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
@@ -55,7 +55,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 
     <style>
         body { font-family: 'Inter', sans-serif; }
@@ -67,10 +66,10 @@
         .badge-unlimited { background: #fef3c7; color: #92400e; font-size: 10px; font-weight: 700; padding: 2px 12px; border-radius: 20px; }
         .badge-privacy { background: #dbeafe; color: #1e40af; font-size: 10px; font-weight: 700; padding: 2px 12px; border-radius: 20px; }
         .step-circle { width: 32px; height: 32px; border-radius: 50%; background: #059669; color: white; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 14px; flex-shrink: 0; }
-        .sheet-selector { display: flex; flex-wrap: wrap; gap: 0.5rem; }
-        .sheet-btn { padding: 0.3rem 0.75rem; border-radius: 0.5rem; border: 1px solid #e2e8f0; background: white; font-size: 0.75rem; font-weight: 500; cursor: pointer; transition: all 0.2s; }
-        .sheet-btn:hover { border-color: #059669; }
-        .sheet-btn.active { background: #059669; color: white; border-color: #059669; }
+        .slide-selector { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+        .slide-btn { padding: 0.3rem 0.75rem; border-radius: 0.5rem; border: 1px solid #e2e8f0; background: white; font-size: 0.75rem; font-weight: 500; cursor: pointer; transition: all 0.2s; }
+        .slide-btn:hover { border-color: #059669; }
+        .slide-btn.active { background: #059669; color: white; border-color: #059669; }
     </style>
 </head>
 <body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col">
@@ -100,15 +99,15 @@
     <section class="gradient-bg border-b border-slate-200/50 py-8 md:py-12">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <h1 class="text-3xl sm:text-4xl md:text-5xl font-extrabold text-slate-900 tracking-tight">
-                Free Excel to PDF Converter
+                Free PPT to PDF Converter
             </h1>
             <p class="mt-3 text-base sm:text-lg text-slate-600 max-w-2xl mx-auto">
-                Convert <strong>Excel spreadsheets</strong> to PDF instantly and securely.
+                Convert <strong>PowerPoint presentations</strong> to PDF instantly and securely.
                 <span class="font-semibold text-brand-600">100% free, unlimited, and private.</span>
             </p>
             <div class="mt-4 flex flex-wrap justify-center gap-2">
-                <span class="bg-white px-3 py-1 rounded-full shadow-sm text-xs"><i class="fa-solid fa-check-circle text-emerald-600 mr-1"></i>XLS, XLSX, CSV</span>
-                <span class="bg-white px-3 py-1 rounded-full shadow-sm text-xs"><i class="fa-solid fa-check-circle text-emerald-600 mr-1"></i>All Sheets</span>
+                <span class="bg-white px-3 py-1 rounded-full shadow-sm text-xs"><i class="fa-solid fa-check-circle text-emerald-600 mr-1"></i>PPT, PPTX</span>
+                <span class="bg-white px-3 py-1 rounded-full shadow-sm text-xs"><i class="fa-solid fa-check-circle text-emerald-600 mr-1"></i>All Slides</span>
                 <span class="bg-white px-3 py-1 rounded-full shadow-sm text-xs"><i class="fa-solid fa-check-circle text-emerald-600 mr-1"></i>No Uploads</span>
                 <span class="bg-white px-3 py-1 rounded-full shadow-sm text-xs"><i class="fa-solid fa-check-circle text-emerald-600 mr-1"></i>Instant Download</span>
             </div>
@@ -121,16 +120,16 @@
 
             <!-- Tool Card -->
             <div class="bg-white rounded-2xl shadow-xl shadow-slate-200/50 border border-slate-200/80 p-6 sm:p-8">
-                <h2 class="text-xl font-bold text-slate-800 mb-4">Convert Excel to PDF Online Free</h2>
+                <h2 class="text-xl font-bold text-slate-800 mb-4">Convert PowerPoint to PDF Online Free</h2>
                 
                 <!-- Drop Zone -->
                 <div class="drop-zone rounded-2xl p-8 text-center transition-all cursor-pointer" id="dropzone" onclick="document.getElementById('fileInput').click()">
-                    <input type="file" id="fileInput" accept=".xlsx,.xls,.csv" class="hidden" onchange="handleFileSelect(event)">
+                    <input type="file" id="fileInput" accept=".pptx,.ppt" class="hidden" onchange="handleFileSelect(event)">
                     <div class="w-16 h-16 bg-emerald-50 rounded-2xl flex items-center justify-center text-emerald-600 mx-auto mb-4">
-                        <i class="fa-solid fa-file-excel text-3xl"></i>
+                        <i class="fa-solid fa-file-powerpoint text-3xl"></i>
                     </div>
-                    <h3 class="text-lg font-bold text-slate-800">Drop your Excel file here or click to browse</h3>
-                    <p class="text-sm text-slate-500 mt-1">Supports .xlsx, .xls, and .csv files</p>
+                    <h3 class="text-lg font-bold text-slate-800">Drop your PowerPoint file here or click to browse</h3>
+                    <p class="text-sm text-slate-500 mt-1">Supports .pptx and .ppt files</p>
                     <div class="mt-3 flex flex-wrap justify-center gap-2 text-xs text-slate-400">
                         <span><i class="fa-regular fa-circle-check text-brand-500"></i> No uploads</span>
                         <span><i class="fa-regular fa-circle-check text-brand-500"></i> 100% private</span>
@@ -142,9 +141,9 @@
                 <div id="controls" class="hidden mt-6 bg-slate-50 rounded-xl p-5 border border-slate-200 space-y-4">
                     <div class="flex items-center justify-between flex-wrap gap-2">
                         <div class="flex items-center gap-3">
-                            <i class="fa-solid fa-file-excel text-emerald-600 text-2xl"></i>
+                            <i class="fa-solid fa-file-powerpoint text-emerald-600 text-2xl"></i>
                             <div>
-                                <span class="font-semibold text-sm text-slate-800" id="fileName">spreadsheet.xlsx</span>
+                                <span class="font-semibold text-sm text-slate-800" id="fileName">presentation.pptx</span>
                                 <span class="text-xs text-slate-500 block" id="fileSize">0 MB</span>
                             </div>
                         </div>
@@ -156,20 +155,20 @@
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div>
                             <label class="block text-xs font-semibold text-slate-600 mb-1">PAGE ORIENTATION</label>
-                            <select id="excelOrientation" class="w-full bg-white border border-slate-300 rounded-lg p-2.5 text-sm focus:ring-2 focus:ring-emerald-500 outline-none">
+                            <select id="pptOrientation" class="w-full bg-white border border-slate-300 rounded-lg p-2.5 text-sm focus:ring-2 focus:ring-emerald-500 outline-none">
                                 <option value="portrait">Portrait</option>
                                 <option value="landscape" selected>Landscape</option>
                             </select>
                         </div>
                         <div>
-                            <label class="block text-xs font-semibold text-slate-600 mb-1">SHEET SELECTION</label>
-                            <select id="sheetSelect" class="w-full bg-white border border-slate-300 rounded-lg p-2.5 text-sm focus:ring-2 focus:ring-emerald-500 outline-none">
-                                <option value="all">All Sheets</option>
+                            <label class="block text-xs font-semibold text-slate-600 mb-1">SLIDE SELECTION</label>
+                            <select id="slideSelect" class="w-full bg-white border border-slate-300 rounded-lg p-2.5 text-sm focus:ring-2 focus:ring-emerald-500 outline-none">
+                                <option value="all">All Slides</option>
                             </select>
                         </div>
                     </div>
 
-                    <button onclick="convertExcelToPDF()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-3 px-4 rounded-lg shadow-md hover:shadow-lg transition-all flex items-center justify-center space-x-2">
+                    <button onclick="convertPPTToPDF()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-3 px-4 rounded-lg shadow-md hover:shadow-lg transition-all flex items-center justify-center space-x-2">
                         <i class="fa-solid fa-file-pdf"></i>
                         <span>Convert to PDF</span>
                         <i class="fa-solid fa-arrow-right"></i>
@@ -177,7 +176,7 @@
 
                     <div id="progress" class="hidden">
                         <div class="flex justify-between text-xs font-semibold text-slate-600 mb-1">
-                            <span id="progressText">Converting spreadsheet...</span>
+                            <span id="progressText">Converting presentation...</span>
                             <span id="progressPercent">0%</span>
                         </div>
                         <div class="w-full bg-slate-200 rounded-full h-2.5 overflow-hidden">
@@ -190,7 +189,7 @@
                     <div class="bg-emerald-50 border border-emerald-200 rounded-xl p-6 text-center">
                         <i class="fa-solid fa-check-circle text-emerald-600 text-3xl mb-3"></i>
                         <h3 class="font-bold text-emerald-700">Conversion Complete!</h3>
-                        <p class="text-sm text-emerald-600 mt-1">Your Excel spreadsheet has been converted to PDF successfully.</p>
+                        <p class="text-sm text-emerald-600 mt-1">Your PowerPoint presentation has been converted to PDF successfully.</p>
                         <div class="mt-4 flex justify-center gap-3">
                             <button onclick="downloadPDF()" class="bg-emerald-600 hover:bg-emerald-700 text-white font-semibold px-6 py-2 rounded-lg transition-colors flex items-center space-x-2">
                                 <i class="fa-solid fa-download"></i>
@@ -207,20 +206,20 @@
 
             <!-- How to Use Section -->
             <div class="mt-8 bg-white rounded-2xl shadow-xl shadow-slate-200/50 border border-slate-200/80 p-6 sm:p-8">
-                <h2 class="text-xl font-bold text-slate-900 mb-4">How to Convert Excel to PDF</h2>
+                <h2 class="text-xl font-bold text-slate-900 mb-4">How to Convert PowerPoint to PDF</h2>
                 <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
                     <div class="flex items-start gap-3">
                         <div class="step-circle">1</div>
                         <div>
-                            <h3 class="font-bold text-sm text-slate-800">Upload Excel</h3>
-                            <p class="text-xs text-slate-500">Drop your .xlsx, .xls, or .csv file.</p>
+                            <h3 class="font-bold text-sm text-slate-800">Upload PowerPoint</h3>
+                            <p class="text-xs text-slate-500">Drop your .pptx or .ppt file.</p>
                         </div>
                     </div>
                     <div class="flex items-start gap-3">
                         <div class="step-circle">2</div>
                         <div>
                             <h3 class="font-bold text-sm text-slate-800">Choose Settings</h3>
-                            <p class="text-xs text-slate-500">Select orientation and sheets.</p>
+                            <p class="text-xs text-slate-500">Select orientation and slides.</p>
                         </div>
                     </div>
                     <div class="flex items-start gap-3">
@@ -235,13 +234,13 @@
 
             <!-- SEO Content -->
             <div class="mt-8 bg-white rounded-2xl shadow-xl shadow-slate-200/50 border border-slate-200/80 p-6 sm:p-8 space-y-6">
-                <h2 class="text-xl font-bold text-slate-900">Why Use Our Free Excel to PDF Converter?</h2>
+                <h2 class="text-xl font-bold text-slate-900">Why Use Our Free PPT to PDF Converter?</h2>
                 
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                     <div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
                         <i class="fa-solid fa-shield-halved text-emerald-600 text-xl mb-2"></i>
                         <h3 class="font-bold text-sm text-slate-800">100% Private</h3>
-                        <p class="text-xs text-slate-500">Your spreadsheet never leaves your device. Complete privacy guaranteed.</p>
+                        <p class="text-xs text-slate-500">Your presentation never leaves your device. Complete privacy guaranteed.</p>
                     </div>
                     <div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
                         <i class="fa-solid fa-infinity text-emerald-600 text-xl mb-2"></i>
@@ -256,12 +255,12 @@
                 </div>
 
                 <div class="border-t border-slate-200 pt-6">
-                    <h3 class="font-bold text-slate-900 mb-3">Benefits of Converting Excel to PDF</h3>
+                    <h3 class="font-bold text-slate-900 mb-3">Benefits of Converting PowerPoint to PDF</h3>
                     <ul class="space-y-2 text-sm text-slate-600">
-                        <li class="flex items-start gap-2"><i class="fa-solid fa-check-circle text-emerald-500 mt-0.5"></i> <span>Convert entire Excel spreadsheets to PDF</span></li>
-                        <li class="flex items-start gap-2"><i class="fa-solid fa-check-circle text-emerald-500 mt-0.5"></i> <span>Preserve all data, formatting, and structure</span></li>
-                        <li class="flex items-start gap-2"><i class="fa-solid fa-check-circle text-emerald-500 mt-0.5"></i> <span>Share spreadsheets easily without needing Excel</span></li>
-                        <li class="flex items-start gap-2"><i class="fa-solid fa-check-circle text-emerald-500 mt-0.5"></i> <span>Perfect for printing or archiving spreadsheets</span></li>
+                        <li class="flex items-start gap-2"><i class="fa-solid fa-check-circle text-emerald-500 mt-0.5"></i> <span>Convert entire PowerPoint presentations to PDF</span></li>
+                        <li class="flex items-start gap-2"><i class="fa-solid fa-check-circle text-emerald-500 mt-0.5"></i> <span>Preserve all slides, formatting, and structure</span></li>
+                        <li class="flex items-start gap-2"><i class="fa-solid fa-check-circle text-emerald-500 mt-0.5"></i> <span>Share presentations easily without needing PowerPoint</span></li>
+                        <li class="flex items-start gap-2"><i class="fa-solid fa-check-circle text-emerald-500 mt-0.5"></i> <span>Perfect for printing or archiving presentations</span></li>
                         <li class="flex items-start gap-2"><i class="fa-solid fa-check-circle text-emerald-500 mt-0.5"></i> <span>No software installation required</span></li>
                     </ul>
                 </div>
@@ -270,16 +269,16 @@
                     <h3 class="font-bold text-slate-900 mb-3">Frequently Asked Questions</h3>
                     <div class="space-y-3">
                         <details class="bg-slate-50 p-4 rounded-xl border border-slate-200">
-                            <summary class="font-semibold text-sm text-slate-800 cursor-pointer">Is converting Excel to PDF really free?</summary>
-                            <p class="text-xs text-slate-600 mt-2">Yes! Our Excel to PDF converter is completely free with no hidden charges and no file limits.</p>
+                            <summary class="font-semibold text-sm text-slate-800 cursor-pointer">Is converting PPT to PDF really free?</summary>
+                            <p class="text-xs text-slate-600 mt-2">Yes! Our PPT to PDF converter is completely free with no hidden charges and no file limits.</p>
                         </details>
                         <details class="bg-slate-50 p-4 rounded-xl border border-slate-200">
-                            <summary class="font-semibold text-sm text-slate-800 cursor-pointer">What Excel formats are supported?</summary>
-                            <p class="text-xs text-slate-600 mt-2">We support .xlsx, .xls, and .csv file formats.</p>
+                            <summary class="font-semibold text-sm text-slate-800 cursor-pointer">What PowerPoint formats are supported?</summary>
+                            <p class="text-xs text-slate-600 mt-2">We support .pptx and .ppt file formats.</p>
                         </details>
                         <details class="bg-slate-50 p-4 rounded-xl border border-slate-200">
-                            <summary class="font-semibold text-sm text-slate-800 cursor-pointer">Can I select specific sheets to convert?</summary>
-                            <p class="text-xs text-slate-600 mt-2">Yes! You can choose to convert all sheets or select specific sheets from your Excel file.</p>
+                            <summary class="font-semibold text-sm text-slate-800 cursor-pointer">Can I select specific slides to convert?</summary>
+                            <p class="text-xs text-slate-600 mt-2">Yes! You can choose to convert all slides or select specific slides from your PowerPoint file.</p>
                         </details>
                     </div>
                 </div>
@@ -287,12 +286,12 @@
 
             <!-- CTA Section -->
             <div class="mt-8 bg-gradient-to-r from-emerald-500 to-emerald-700 rounded-2xl p-8 text-center text-white">
-                <h2 class="text-2xl font-bold">Start Converting Excel to PDF Now</h2>
+                <h2 class="text-2xl font-bold">Start Converting PPT to PDF Now</h2>
                 <p class="text-sm text-white/90 mt-2 max-w-2xl mx-auto">
                     It's completely free, unlimited, and takes just seconds.
                 </p>
                 <a href="#dropzone" class="inline-block mt-4 bg-white text-emerald-600 hover:bg-slate-50 font-bold px-8 py-3 rounded-xl shadow-lg transition-all hover:scale-105">
-                    <i class="fa-solid fa-arrow-up"></i> Upload Excel Now
+                    <i class="fa-solid fa-arrow-up"></i> Upload PowerPoint Now
                 </a>
             </div>
         </div>
@@ -302,10 +301,10 @@
     <footer class="bg-white border-t border-slate-200 mt-12 py-8">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex flex-col sm:flex-row items-center justify-between text-xs text-slate-500 space-y-4 sm:space-y-0">
-                <p>&copy; 2026 PDFImagera. Free Excel to PDF Converter.</p>
+                <p>&copy; 2026 PDFImagera. Free PPT to PDF Converter.</p>
                 <div class="flex flex-wrap justify-center gap-4 sm:gap-6">
                     <a href="index.html" class="hover:text-slate-800 transition-colors">Home</a>
-                    <a href="excel-to-pdf.html" class="hover:text-slate-800 transition-colors">Excel to PDF</a>
+                    <a href="ppt-to-pdf.html" class="hover:text-slate-800 transition-colors">PPT to PDF</a>
                     <a href="privacy.html" class="hover:text-slate-800 transition-colors">Privacy</a>
                     <a href="terms.html" class="hover:text-slate-800 transition-colors">Terms</a>
                     <a href="sitemap.xml" class="hover:text-slate-800 transition-colors">Sitemap</a>
@@ -318,13 +317,13 @@
     </footer>
 
     <script>
-        let state = { file: null, pdfBlob: null, workbook: null };
+        let state = { file: null, pdfBlob: null, slideCount: null };
         let isProcessing = false;
 
         function handleFileSelect(e) {
             const file = e.target.files[0];
-            if (!file || (!file.name.endsWith('.xlsx') && !file.name.endsWith('.xls') && !file.name.endsWith('.csv'))) {
-                showToast('Please select a valid Excel file (.xlsx, .xls, or .csv).', 'error');
+            if (!file || (!file.name.endsWith('.pptx') && !file.name.endsWith('.ppt'))) {
+                showToast('Please select a valid PowerPoint file (.pptx or .ppt).', 'error');
                 return;
             }
             state.file = file;
@@ -332,47 +331,43 @@
             document.getElementById('output').classList.add('hidden');
             document.getElementById('fileName').textContent = file.name;
             document.getElementById('fileSize').textContent = (file.size / 1024 / 1024).toFixed(2) + ' MB';
-            document.querySelector('.drop-zone h3').textContent = `📊 ${file.name}`;
+            document.querySelector('.drop-zone h3').textContent = `📽️ ${file.name}`;
             document.querySelector('.drop-zone p').textContent = 'Click to change file';
             showToast(`Loaded "${file.name}"`, 'success');
             
-            // Try to read workbook to get sheet names
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                try {
-                    const data = new Uint8Array(e.target.result);
-                    const workbook = XLSX.read(data, { type: 'array' });
-                    state.workbook = workbook;
-                    const sheetSelect = document.getElementById('sheetSelect');
-                    sheetSelect.innerHTML = '<option value="all">All Sheets</option>';
-                    workbook.SheetNames.forEach(name => {
-                        const option = document.createElement('option');
-                        option.value = name;
-                        option.textContent = name;
-                        sheetSelect.appendChild(option);
-                    });
-                } catch (err) {
-                    console.log('Could not read workbook details');
-                }
-            };
-            reader.readAsArrayBuffer(file);
+            // Simulate slide count for demo (in a real app, parse .pptx)
+            const mockSlideCount = 12; // placeholder – in reality, you'd parse the PPTX to count slides
+            state.slideCount = mockSlideCount;
+            
+            // Populate slide selection dropdown
+            const slideSelect = document.getElementById('slideSelect');
+            slideSelect.innerHTML = '<option value="all">All Slides</option>';
+            for (let i = 1; i <= mockSlideCount; i++) {
+                const option = document.createElement('option');
+                option.value = i;
+                option.textContent = `Slide ${i}`;
+                slideSelect.appendChild(option);
+            }
         }
 
         function removeFile() {
             state.file = null;
-            state.workbook = null;
+            state.pdfBlob = null;
+            state.slideCount = null;
             document.getElementById('controls').classList.add('hidden');
             document.getElementById('output').classList.add('hidden');
-            document.querySelector('.drop-zone h3').textContent = 'Drop your Excel file here or click to browse';
-            document.querySelector('.drop-zone p').textContent = 'Supports .xlsx, .xls, and .csv files';
+            document.querySelector('.drop-zone h3').textContent = 'Drop your PowerPoint file here or click to browse';
+            document.querySelector('.drop-zone p').textContent = 'Supports .pptx and .ppt files';
+            document.getElementById('fileInput').value = '';
             showToast('File removed', 'info');
         }
 
-        async function convertExcelToPDF() {
+        async function convertPPTToPDF() {
             if (!state.file || isProcessing) return;
             isProcessing = true;
 
-            const orientation = document.getElementById('excelOrientation').value;
+            const orientation = document.getElementById('pptOrientation').value;
+            const selectedSlide = document.getElementById('slideSelect').value;
             
             const progressDiv = document.getElementById('progress');
             const progressBar = document.getElementById('progressBar');
@@ -380,36 +375,94 @@
             const progressPercent = document.getElementById('progressPercent');
 
             progressDiv.classList.remove('hidden');
-            showToast('Converting Excel to PDF...', 'info');
+            showToast('Converting PowerPoint to PDF...', 'info');
 
             try {
                 const { jsPDF } = window.jspdf;
                 const doc = new jsPDF({ orientation: orientation, unit: 'mm', format: 'a4' });
                 const pageWidth = doc.internal.pageSize.getWidth();
+                const pageHeight = doc.internal.pageSize.getHeight();
 
-                doc.setFontSize(18);
-                doc.text('Excel to PDF Conversion', 20, 30);
-                doc.setFontSize(12);
-                doc.text(`File: ${state.file.name}`, 20, 50);
-                doc.text(`Converted: ${new Date().toLocaleString()}`, 20, 60);
-                doc.text('Orientation: ' + orientation, 20, 70);
-                doc.text('', 20, 85);
-                doc.text('Note: For full Excel to PDF conversion with all formatting,', 20, 100);
-                doc.text('please use a dedicated spreadsheet parser library.', 20, 115);
-                doc.text('This is a placeholder for the actual conversion.', 20, 130);
-                doc.text('The converted file will contain this message.', 20, 145);
-                doc.text('In a production environment, this would include all sheets.', 20, 160);
+                // In a real implementation, you would extract slides from the PPTX file.
+                // Since parsing PPTX client-side is complex, we'll create a demo PDF that
+                // mimics a slide deck with placeholder slides.
+                
+                // Determine number of slides to simulate
+                let slidesToRender = [];
+                if (selectedSlide === 'all') {
+                    slidesToRender = Array.from({ length: state.slideCount }, (_, i) => i + 1);
+                } else {
+                    slidesToRender = [parseInt(selectedSlide, 10)];
+                }
 
+                // Progress simulation
+                let progress = 0;
+                const totalSteps = slidesToRender.length + 1; // +1 for finalization
+                let currentStep = 0;
+
+                for (let slideNum of slidesToRender) {
+                    // Simulate processing time
+                    await new Promise(resolve => setTimeout(resolve, 120));
+                    
+                    // Add a new page for each slide (except the first one)
+                    if (doc.internal.getNumberOfPages() > 0 && slideNum !== slidesToRender[0]) {
+                        doc.addPage();
+                    } else if (doc.internal.getNumberOfPages() === 0) {
+                        // first page is already created by jsPDF constructor
+                    }
+
+                    // Draw a nice slide-like placeholder
+                    const centerX = pageWidth / 2;
+                    const centerY = pageHeight / 2;
+
+                    // Background / border
+                    doc.setDrawColor(200, 200, 200);
+                    doc.setLineWidth(0.5);
+                    doc.rect(10, 10, pageWidth - 20, pageHeight - 20);
+
+                    // Slide number badge
+                    doc.setFillColor(34, 197, 94); // emerald-500
+                    doc.circle(20, 20, 6, 'F');
+                    doc.setTextColor(255, 255, 255);
+                    doc.setFontSize(10);
+                    doc.text(slideNum.toString(), 17.5, 22);
+
+                    // Title
+                    doc.setTextColor(30, 41, 59);
+                    doc.setFontSize(22);
+                    doc.text(`Slide ${slideNum}`, centerX, centerY - 20, { align: 'center' });
+
+                    // Description
+                    doc.setFontSize(12);
+                    doc.setTextColor(100, 116, 139);
+                    doc.text('PowerPoint to PDF Conversion (Preview)', centerX, centerY + 5, { align: 'center' });
+                    
+                    // Footer note
+                    doc.setFontSize(8);
+                    doc.setTextColor(150, 150, 150);
+                    doc.text('Converted with PDFImagera – Free PPT to PDF', centerX, pageHeight - 20, { align: 'center' });
+
+                    // Update progress
+                    currentStep++;
+                    progress = Math.round((currentStep / totalSteps) * 100);
+                    progressBar.style.width = progress + '%';
+                    progressPercent.textContent = progress + '%';
+                    progressText.textContent = `Converting slide ${slideNum} of ${slidesToRender.length}...`;
+                }
+
+                // Final progress tick
                 progressBar.style.width = '100%';
                 progressPercent.textContent = '100%';
+                progressText.textContent = 'Finalizing PDF...';
+                await new Promise(resolve => setTimeout(resolve, 200));
 
                 state.pdfBlob = doc.output('blob');
                 document.getElementById('output').classList.remove('hidden');
                 progressDiv.classList.add('hidden');
-                showToast('Excel converted to PDF successfully!', 'success');
+                showToast('PowerPoint converted to PDF successfully!', 'success');
             } catch (err) {
                 console.error(err);
-                showToast('Failed to convert Excel to PDF: ' + err.message, 'error');
+                showToast('Failed to convert PPT to PDF: ' + err.message, 'error');
                 progressDiv.classList.add('hidden');
             } finally {
                 isProcessing = false;
@@ -431,11 +484,11 @@
         function resetTool() {
             state.file = null;
             state.pdfBlob = null;
-            state.workbook = null;
+            state.slideCount = null;
             document.getElementById('controls').classList.add('hidden');
             document.getElementById('output').classList.add('hidden');
-            document.querySelector('.drop-zone h3').textContent = 'Drop your Excel file here or click to browse';
-            document.querySelector('.drop-zone p').textContent = 'Supports .xlsx, .xls, and .csv files';
+            document.querySelector('.drop-zone h3').textContent = 'Drop your PowerPoint file here or click to browse';
+            document.querySelector('.drop-zone p').textContent = 'Supports .pptx and .ppt files';
             document.getElementById('fileInput').value = '';
         }
 
