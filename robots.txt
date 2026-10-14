@@ -11,8 +11,7 @@ Sitemap: https://pdfimagera.com/sitemap.xml
 # Disallow: /admin/
 # Disallow: /private/
 
-# Crawl delay to be respectful
-Crawl-delay: 2
+
 
 # Specify preferred domain
 Host: https://pdfimagera.com
